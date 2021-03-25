@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "701931367523",
+    "firebase_url": "https://fastindia-28269.firebaseio.com",
+    "project_id": "fastindia-28269",
+    "storage_bucket": "fastindia-28269.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701931367523:android:21faed1db39d7039a81c56",
+        "android_client_info": {
+          "package_name": "com.tecqza.gdm.fastindia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701931367523-6dr8ltnfbnjeuufbet5shqqmsi6buiql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD936upy9GeYOucnaodS9BkLVShe0wSVF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701931367523-6dr8ltnfbnjeuufbet5shqqmsi6buiql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
