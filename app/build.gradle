@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.tecqza.gdm.fastindia"
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 2
+        versionName "1.1"
+        manifestPlaceholders = [file_provider: "com.tecqza.gdm.fastindia"]
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.firebase:firebase-analytics:17.4.2'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "androidx.cardview:cardview:1.0.0"
+
+
+    implementation 'net.gotev:uploadservice:2.1'
+    implementation 'pub.devrel:easypermissions:1.2.0'
+
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+    implementation 'com.jackandphantom.android:circularimageview:1.2.0'
+
+    implementation 'com.razorpay:checkout:1.5.12'
+
+
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
+
+    implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:17.4.0'
+
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+    implementation 'net.gotev:uploadservice:2.1'
+
+    implementation 'com.google.firebase:firebase-messaging:20.1.7'
+}
