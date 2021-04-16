@@ -18,7 +18,7 @@
         android:drawableStart="@drawable/ic_location"
         android:drawablePadding="10dp"
         android:maxLines="1"
-        android:paddingVertical="10dp"
+        android:paddingVertical="7dp"
         android:paddingStart="10dp"
         android:text="B-75 Krishna Vihar Koni Bilaspur"
         android:textColor="@color/gray"
@@ -37,6 +37,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_address"
         app:layout_constraintTop_toTopOf="@+id/text_address" />
+
+
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="vendor_name,vendor_address,vendor_image,vendor_mobile,textView8" />
 
     <TextView
         android:id="@+id/textView8"
@@ -94,7 +102,8 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="Not on the list?"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/vendor_image"
@@ -115,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Clear All selection"
+        android:text="Clear selection"
         android:textColor="@color/yellow"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView30"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -138,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="items Selected"
+        android:text="items"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/clear_selection"
@@ -229,7 +238,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_non_extra"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 app:layout_constraintTop_toBottomOf="@+id/label"
                 tools:listitem="@layout/cart_list_items" />
 
@@ -270,7 +279,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_extra"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="1dp"
                 app:layout_constraintTop_toBottomOf="@+id/extra_label"
                 tools:listitem="@layout/cart_list_extra_items" />

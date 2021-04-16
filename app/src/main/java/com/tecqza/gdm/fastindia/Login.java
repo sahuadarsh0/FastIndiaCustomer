@@ -41,6 +41,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -66,6 +67,7 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         context = this;
         userSharedPrefs = new SharedPrefs(context, "USER");
         processDialog = new ProcessDialog(context, "Processing");
@@ -149,41 +151,38 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
         });
 
 
-        verify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userSharedPrefs.getSharedPrefs("otp").equals(otp.getText().toString())) {
-                    userSharedPrefs.setSharedPrefs("mobile", mobile.getText().toString());
-                    if (customer_data.equals("NA")) {
-                        Intent i = new Intent(context, HomeActivity.class);
-                        i.putExtra("open", "PROFILE");
-                        startActivity(i);
-                        finish();
-                    } else {
-                        try {
-                            JSONObject jsonObject = new JSONObject(customer_data);
-                            userSharedPrefs.setSharedPrefs("id", jsonObject.getString("id"));
-                            userSharedPrefs.setSharedPrefs("name", jsonObject.getString("name"));
-                            userSharedPrefs.setSharedPrefs("image", jsonObject.getString("image"));
-                            userSharedPrefs.setSharedPrefs("email", jsonObject.getString("email"));
-                            userSharedPrefs.setSharedPrefs("mobile", jsonObject.getString("mobile"));
-                            userSharedPrefs.setSharedPrefs("address", jsonObject.getString("address"));
-                            userSharedPrefs.setSharedPrefs("landmark", jsonObject.getString("landmark"));
-                            userSharedPrefs.setSharedPrefs("state_id", jsonObject.getString("state_id"));
-                            userSharedPrefs.setSharedPrefs("city_id", jsonObject.getString("city_id"));
-                            processDialog.dismiss();
-                            Intent i = new Intent(context, HomeActivity.class);
-                            i.putExtra("open", "ORDER_TYPE");
-                            startActivity(i);
-                        } catch (JSONException e) {
-                            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    RegisterToken register = new RegisterToken();
-                    register.execute(userSharedPrefs.getSharedPrefs("id"),token.getSharedPrefs("token"));
+        verify.setOnClickListener(v -> {
+            if (userSharedPrefs.getSharedPrefs("otp").equals(otp.getText().toString())) {
+                userSharedPrefs.setSharedPrefs("mobile", mobile.getText().toString());
+                if (customer_data.equals("NA")) {
+                    Intent i = new Intent(context, HomeActivity.class);
+                    i.putExtra("open", "PROFILE");
+                    startActivity(i);
+                    finish();
                 } else {
-                    Toast.makeText(context, "Invalid otp", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject jsonObject = new JSONObject(customer_data);
+                        userSharedPrefs.setSharedPrefs("id", jsonObject.getString("id"));
+                        userSharedPrefs.setSharedPrefs("name", jsonObject.getString("name"));
+                        userSharedPrefs.setSharedPrefs("image", jsonObject.getString("image"));
+                        userSharedPrefs.setSharedPrefs("email", jsonObject.getString("email"));
+                        userSharedPrefs.setSharedPrefs("mobile", jsonObject.getString("mobile"));
+                        userSharedPrefs.setSharedPrefs("address", jsonObject.getString("address"));
+                        userSharedPrefs.setSharedPrefs("landmark", jsonObject.getString("landmark"));
+                        userSharedPrefs.setSharedPrefs("state_id", jsonObject.getString("state_id"));
+                        userSharedPrefs.setSharedPrefs("city_id", jsonObject.getString("city_id"));
+                        processDialog.dismiss();
+                        Intent i = new Intent(context, HomeActivity.class);
+                        i.putExtra("open", "ORDER_TYPE");
+                        startActivity(i);
+                    } catch (JSONException e) {
+
+                    }
                 }
+                RegisterToken register = new RegisterToken();
+                register.execute(userSharedPrefs.getSharedPrefs("id"),token.getSharedPrefs("token"));
+            } else {
+                Toast.makeText(context, "Invalid otp", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -204,11 +203,9 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_USER_CONSENT) {
             if ((resultCode == RESULT_OK) && (data != null)) {
-                //That gives all message to us.
-                // We need to get the code from inside with regex
+
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
-//                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-//                textViewMessage.setText(String.format("%s - %s", getString(R.string.received_message), message));
+
                 getOtpFromMessage(message);
             }
         }
@@ -263,7 +260,7 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
                     message.setText(errors);
                     Otp_dialog.show();
                 } else if (jsonObject.getString("status").equals("otpsent")) {
-//                    Toast.makeText(context, jsonObject.getString("otp"), Toast.LENGTH_SHORT).show();
+                    Log.d("asa", "OTP: "+jsonObject.getString("otp"));
                     userSharedPrefs.setSharedPrefs("otp", jsonObject.getString("otp"));
                     customer_data = jsonObject.getString("data");
                     title.setText("Success");
@@ -280,13 +277,13 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
                     };
 
 
-                    handler.postDelayed(runnable, 3000);
+                    handler.postDelayed(runnable, 2000);
 
 
                 } else {
                 }
             } catch (JSONException e) {
-                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+
             }
             processDialog.dismiss();
         }
@@ -301,7 +298,7 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -309,7 +306,7 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -347,12 +344,12 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
         client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-//                Toast.makeText(getApplicationContext(), "On Success", Toast.LENGTH_LONG).show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getApplicationContext(), "On OnFailure", Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -428,7 +425,7 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8") + "&" +
                         URLEncoder.encode("token", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") ;
 
@@ -437,7 +434,7 @@ public class Login extends AppCompatActivity implements EasyPermissions.Permissi
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;

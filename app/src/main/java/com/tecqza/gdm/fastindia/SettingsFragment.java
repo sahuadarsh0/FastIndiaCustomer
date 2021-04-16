@@ -65,6 +65,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,11 +76,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class SettingsFragment extends Fragment {
 
-    private Context context;
-    private ProcessDialog processDialog;
-    private SharedPrefs userSharedPrefs;
+    private final Context context;
+    private final ProcessDialog processDialog;
+    private final SharedPrefs userSharedPrefs;
     private TextView edit1, mobile, name1, manual_address, manual_address_text;
-    private BottomNavigationView bottomNavigationView;
+    private final BottomNavigationView bottomNavigationView;
     private String state, city, pin;
     private ImageButton gps;
 
@@ -524,6 +525,10 @@ public class SettingsFragment extends Fragment {
         locationRequest.setFastestInterval(3000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
         LocationServices.getFusedLocationProviderClient(context).
                 requestLocationUpdates(locationRequest, new LocationCallback() {
                     @Override
@@ -561,10 +566,24 @@ public class SettingsFragment extends Fragment {
             super.onPostExecute(s);
             processDialog.dismiss();
             try {
+
+                Dialog dialog;
+                dialog = new Dialog(context);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.alert_dialog);
+                Window window = dialog.getWindow();
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                window.setBackgroundDrawableResource(R.color.semi_transparent);
+                dialog.setCancelable(true);
+                TextView title, message;
+                title = dialog.findViewById(R.id.title);
+                message = dialog.findViewById(R.id.message);
+
+
                 final JSONObject jsonObject = new JSONObject(s);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 if (jsonObject.getString("status").equals("missing")) {
-                    builder.setTitle("Missing Values");
+                    title.setText("Missing Values");
                     StringBuffer errors = new StringBuffer();
                     JSONArray errorsJsonArray = new JSONArray(jsonObject.getString("errors"));
                     JSONObject errorJsonObject;
@@ -572,52 +591,54 @@ public class SettingsFragment extends Fragment {
                         errorJsonObject = errorsJsonArray.getJSONObject(i);
                         errors.append(errorJsonObject.getString("error")).append("\n");
                     }
-                    builder.setMessage(errors);
-                    builder.show();
+                    message.setText(errors);
+                    dialog.show();
                 } else if (jsonObject.getString("status").equals("true")) {
 
 
-                    builder.setTitle("Success");
-                    builder.setMessage(jsonObject.getString("msg"));
+                    title.setText("Success");
+                    message.setText(jsonObject.getString("msg"));
 
-                    builder.setCancelable(false);
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            processDialog.dismiss();
-                            try {
-                                JSONObject customer_JO = new JSONObject(jsonObject.getString("data"));
+                    processDialog.dismiss();
+                    try {
+                        JSONObject customer_JO = new JSONObject(jsonObject.getString("data"));
 
-                                userSharedPrefs.setSharedPrefs("id", customer_JO.getString("id"));
-                                userSharedPrefs.setSharedPrefs("name", customer_JO.getString("name"));
-                                userSharedPrefs.setSharedPrefs("email", customer_JO.getString("email"));
-                                userSharedPrefs.setSharedPrefs("mobile", customer_JO.getString("mobile"));
-                                userSharedPrefs.setSharedPrefs("address", customer_JO.getString("address"));
-                                userSharedPrefs.setSharedPrefs("state_id", customer_JO.getString("state_id"));
-                                userSharedPrefs.setSharedPrefs("city_id", customer_JO.getString("city_id"));
+                        userSharedPrefs.setSharedPrefs("id", customer_JO.getString("id"));
+                        userSharedPrefs.setSharedPrefs("name", customer_JO.getString("name"));
+                        userSharedPrefs.setSharedPrefs("email", customer_JO.getString("email"));
+                        userSharedPrefs.setSharedPrefs("mobile", customer_JO.getString("mobile"));
+                        userSharedPrefs.setSharedPrefs("address", customer_JO.getString("address"));
+                        userSharedPrefs.setSharedPrefs("state_id", customer_JO.getString("state_id"));
+                        userSharedPrefs.setSharedPrefs("city_id", customer_JO.getString("city_id"));
 
-                                bottomNavigationView.setSelectedItemId(R.id.home);
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderTypeFragment(context, bottomNavigationView)).commit();
+                        bottomNavigationView.setSelectedItemId(R.id.home);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderTypeFragment(context, bottomNavigationView)).commit();
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-
-                            }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
 
 
-                        }
-                    });
-                    builder.show();
+                    }
+                    dialog.show();
 
                 } else if (jsonObject.getString("status").equals("error")) {
-                    builder.setTitle("Undefined");
-                    builder.setMessage(jsonObject.getString("msg"));
-                    builder.show();
+                    title.setText("Undefined");
+                    message.setText(jsonObject.getString("msg"));
+                    dialog.show();
                 } else {
-                    builder.setTitle("Error");
-                    builder.setMessage(jsonObject.getString("msg"));
-                    builder.show();
+                    title.setText("Error");
+                    message.setText(jsonObject.getString("msg"));
+                    dialog.show();
                 }
+                Handler handler = new Handler();
+
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                };
+                handler.postDelayed(runnable, 2000);
             } catch (JSONException e) {
                 Log.d("asa", "onPostExecute: " + e.toString());
                 Log.d("asa", "onPostExecute: " + s);
@@ -635,7 +656,7 @@ public class SettingsFragment extends Fragment {
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8") + "&" +
                         URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") + "&" +
                         URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8") + "&" +
@@ -651,7 +672,7 @@ public class SettingsFragment extends Fragment {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -843,7 +864,7 @@ public class SettingsFragment extends Fragment {
                 httpURLConnection.setDoOutput(true);
 
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -907,7 +928,7 @@ public class SettingsFragment extends Fragment {
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("state_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -915,7 +936,7 @@ public class SettingsFragment extends Fragment {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;

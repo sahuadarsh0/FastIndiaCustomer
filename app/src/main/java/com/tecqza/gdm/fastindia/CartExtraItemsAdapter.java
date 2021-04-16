@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class CartExtraItemsAdapter extends RecyclerView.Adapter<CartExtraItemsAdapter.VendorViewHolder> {
 
-    private ArrayList<CartItemsModel> items;
+    private final ArrayList<CartItemsModel> items;
     private CartItemsModel item;
-    private Context context;
-    private ProcessDialog processDialog;
-    private SharedPrefs userSharedPrefs;
+    private final Context context;
+    private final ProcessDialog processDialog;
+    private final SharedPrefs userSharedPrefs;
     DatabaseHelper myDb;
 
     public CartExtraItemsAdapter(ArrayList<CartItemsModel> items, Context context) {

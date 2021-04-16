@@ -49,6 +49,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -57,7 +58,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class AddExtraItemsFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
 
-    private Context context;
+    private final Context context;
     private ImageView image_list;
     private TextView title, upload_text, clear, add_item, upload_image;
     private DatabaseHelper myDb;
@@ -68,8 +69,8 @@ public class AddExtraItemsFragment extends Fragment implements EasyPermissions.P
     private Bitmap imageBitmap;
     private Uri imageUri;
     private ContentValues values;
-    private ProcessDialog processDialog;
-    private SharedPrefs userSharedPrefs;
+    private final ProcessDialog processDialog;
+    private final SharedPrefs userSharedPrefs;
 
     private View view;
     public static final int RESULT_OK = -1;
@@ -178,7 +179,6 @@ public class AddExtraItemsFragment extends Fragment implements EasyPermissions.P
         }
         cartJsonNonExtra.append("]");
 
-        Log.d("asa", "onCreateView: " + cartJsonNonExtra);
 
         Cursor extra = myDb.getExtraItems(userSharedPrefs.getSharedPrefs("vendor_id"));
         StringBuffer cartJsonExtra = new StringBuffer();
@@ -203,7 +203,6 @@ public class AddExtraItemsFragment extends Fragment implements EasyPermissions.P
             }
         }
         cartJsonExtra.append("]");
-        Log.d("asa", "onCreateView: " + cartJsonExtra);
 
 
         try {
@@ -491,7 +490,7 @@ public class AddExtraItemsFragment extends Fragment implements EasyPermissions.P
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("vendor_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -499,7 +498,7 @@ public class AddExtraItemsFragment extends Fragment implements EasyPermissions.P
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;

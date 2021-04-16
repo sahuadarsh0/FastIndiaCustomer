@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -34,6 +39,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -41,13 +47,14 @@ import java.util.ArrayList;
 public class OrderFragment extends Fragment {
 
 
+    private final boolean allowRefresh = false;
     DatabaseHelper myDb;
     private OrderItemsModel order;
     Context context;
     ProcessDialog processDialog;
     SharedPrefs userSharePrefs;
     View view;
-    private String order_id;
+    private final String order_id;
     private TextView total;
 
     private ImageView vendor_image;
@@ -55,7 +62,8 @@ public class OrderFragment extends Fragment {
     LinearLayout extra_label;
     TextView text_address;
     ConstraintLayout waiting, confirmed, view_all_history;
-    TextView status;
+    TextView total_amount;
+    TextView cod, pay_now;
 
     public OrderFragment(Context context, String order_id) {
         this.context = context;
@@ -84,11 +92,14 @@ public class OrderFragment extends Fragment {
         vendor_image = view.findViewById(R.id.vendor_image);
         text_address = view.findViewById(R.id.text_address);
         total = view.findViewById(R.id.total);
+        total_amount = view.findViewById(R.id.total_amount);
         waiting = view.findViewById(R.id.waiting);
         confirmed = view.findViewById(R.id.confirmed);
         extra_label = view.findViewById(R.id.extra_label);
         text_address.setText(userSharePrefs.getSharedPrefs("address"));
         view_all_history = view.findViewById(R.id.constraintLayout2);
+        cod = view.findViewById(R.id.cod);
+        pay_now = view.findViewById(R.id.pay_now);
 
         OrdersDetail detail = new OrdersDetail();
         detail.execute(order_id);
@@ -99,6 +110,28 @@ public class OrderFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderHistoryFragment(context)).addToBackStack(null).commit();
             }
         });
+
+        cod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderDetailsFragment(context, order_id)).addToBackStack(null).commit();
+
+            }
+        });
+
+        pay_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float total = Float.parseFloat(total_amount.getText().toString());
+                total *= 100;
+                Intent intent = new Intent(context, PaymentActivity.class);
+                intent.putExtra("amount", String.valueOf(total));
+                intent.putExtra("order_id", order_id);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -127,6 +160,7 @@ public class OrderFragment extends Fragment {
                     vendor_name.setText(order.vendor_name);
                     vendor_mobile.setText(order.vendor_mobile);
                     vendor_address.setText(order.vendor_address);
+                    total_amount.setText(order.total_amount);
 
                     String image_path = context.getString(R.string.file_base_url) + "vendors/" + order.vendor_image;
                     Picasso.get().load(image_path).into(vendor_image);
@@ -151,11 +185,10 @@ public class OrderFragment extends Fragment {
                     recyclerView1.setLayoutManager(new LinearLayoutManager(context));
                     recyclerView1.setAdapter(new OrderDetailsExtraItemsAdapter(order_extra_item_list, context, total));
 
-//                    customer_name.setText(order.customer_name);
-//                    date.setText(order.cdt);
-//                    Float total_amount=Float.parseFloat(order.amount)+Float.parseFloat(order.extra_amount);
-//                    total.setText(total_amount+"");
-//                    status.setText(order.status);
+
+                    if (order.payment_status.equals("PAID")) {
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderDetailsFragment(context, order_id)).addToBackStack(null).commit();
+                    }
 
                     if (order.status.equals("PREPARED")) {
                         confirmed.setVisibility(View.VISIBLE);
@@ -166,8 +199,9 @@ public class OrderFragment extends Fragment {
                         extra_label.setVisibility(View.GONE);
                         recyclerView1.setVisibility(View.GONE);
                     }
-                    if (order.status.equals("DELIVERED")) {
+                    if (order.status.equals("DELIVERED") || order.status.equals("REJECTED")) {
                         userSharePrefs.clearByName("order_id");
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderHistoryFragment(context)).commit();
                     }
 //
                 }
@@ -187,7 +221,7 @@ public class OrderFragment extends Fragment {
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("order_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -195,7 +229,7 @@ public class OrderFragment extends Fragment {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -207,6 +241,7 @@ public class OrderFragment extends Fragment {
 
         }
     }
+
 
 
 }

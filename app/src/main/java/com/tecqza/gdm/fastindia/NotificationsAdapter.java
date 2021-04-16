@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.VendorViewHolder> {
 
-    private ArrayList<NotificationsModel> notifications;
+    private final ArrayList<NotificationsModel> notifications;
     private NotificationsModel notification;
-    private Context context;
-    private ProcessDialog processDialog;
-    private SharedPrefs userSharedPrefs;
+    private final Context context;
+    private final ProcessDialog processDialog;
+    private final SharedPrefs userSharedPrefs;
 
     public NotificationsAdapter(ArrayList<NotificationsModel> notifications, Context context) {
         this.notifications = notifications;

@@ -25,9 +25,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.VendorViewHo
 
     private ArrayList<OrderItemsModel> orders;
     private OrderItemsModel orderItemsModel;
-    private Context context;
-    private ProcessDialog processDialog;
-    private SharedPrefs userSharedPrefs;
+    private final Context context;
+    private final ProcessDialog processDialog;
+    private final SharedPrefs userSharedPrefs;
 
     public OrderAdapter(ArrayList<OrderItemsModel> orders, Context context) {
         this.orders = orders;
@@ -41,7 +41,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.VendorViewHo
     public VendorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_orders, parent, false);
-        ;
 
         return new OrderAdapter.VendorViewHolder(view);
     }

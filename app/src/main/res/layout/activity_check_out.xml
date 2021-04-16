@@ -18,7 +18,7 @@
         android:drawableStart="@drawable/ic_location"
         android:drawablePadding="10dp"
         android:maxLines="1"
-        android:paddingVertical="10dp"
+        android:paddingVertical="7dp"
         android:paddingStart="10dp"
         android:text="B-75 Krishna Vihar Koni Bilaspur"
         android:textColor="@color/gray"
@@ -163,89 +163,24 @@
 
 
     <TextView
-        android:id="@+id/textView129"
-        style="@style/TextBlack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="Select from your saved locations"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/landmark" />
-
-
-    <TextView
-        android:id="@+id/home"
-        style="@style/TextBlack"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/yellow_back"
-        android:gravity="center"
-        android:paddingHorizontal="2dp"
-        android:paddingVertical="10dp"
-        android:text="Home"
-        android:textSize="13sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toStartOf="@+id/work"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView129"
-        app:layout_constraintWidth_percent=".25" />
-
-    <TextView
-        android:id="@+id/other"
-        style="@style/TextBlack"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/yellow_back"
-        android:gravity="center"
-        android:paddingHorizontal="2dp"
-        android:paddingVertical="10dp"
-        android:text="Other"
-        android:textSize="13sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/work"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/work"
-        app:layout_constraintTop_toTopOf="@+id/work"
-        app:layout_constraintWidth_percent=".25" />
-
-    <TextView
-        android:id="@+id/work"
-        style="@style/TextBlack"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/yellow_back"
-        android:gravity="center"
-        android:paddingHorizontal="2dp"
-        android:paddingVertical="10dp"
-        android:text="Work"
-        android:textSize="13sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/home"
-        app:layout_constraintEnd_toStartOf="@+id/other"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/home"
-        app:layout_constraintTop_toTopOf="@+id/home"
-        app:layout_constraintWidth_percent=".25" />
-
-    <Button
         android:id="@+id/order_now"
-        style="@style/ButtonStyle.large.green"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_weight="1"
+        android:background="@drawable/green_back"
+        android:gravity="center"
+        android:paddingVertical="7dp"
         android:text="Pay Now"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/work"
-        app:layout_constraintWidth_percent=".5" />
+        app:layout_constraintTop_toBottomOf="@+id/landmark"
+        app:layout_constraintWidth_percent=".3" />
 
     <TextView
         android:id="@+id/textView119"
@@ -258,7 +193,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_now" />
-
 
     <View
         android:id="@+id/view7"

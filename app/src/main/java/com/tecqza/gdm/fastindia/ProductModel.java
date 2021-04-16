@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ProductModel {
 
-    String vpid, id, name, image, qty, unit, typ, product_description, amount, flag, cdt, pamount, cqty;
+    String vpid, id, name, image, type, product_description,  flag, cdt, in_stock, cqty, varieties;
 
     DatabaseHelper myDb;
 
@@ -20,14 +20,12 @@ public class ProductModel {
         this.id=product.getString("id");
         this.name=product.getString("name");
         this.image=product.getString("image");
-        this.qty=product.getString("qty");
-        this.unit=product.getString("unit");
-        this.typ=product.getString("type");
+        this.type=product.getString("type");
+        this.in_stock=product.getString("in_stock");
         this.product_description=product.getString("product_description");
-        this.amount=product.getString("amount");
         this.flag=product.getString("flag");
         this.cdt=product.getString("cdt");
-        this.pamount=product.getString("pamount");
+        this.varieties=product.getString("varieties");
 
         myDb = new DatabaseHelper(context);
 

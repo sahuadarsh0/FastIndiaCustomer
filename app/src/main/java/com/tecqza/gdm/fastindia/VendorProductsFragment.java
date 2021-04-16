@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,6 +46,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class VendorProductsFragment extends Fragment {
@@ -99,6 +101,7 @@ public class VendorProductsFragment extends Fragment {
             }
         });
 
+
         text_address.setText(userSharePrefs.getSharedPrefs("address"));
 
         searchProduct.addTextChangedListener(new TextWatcher() {
@@ -128,8 +131,6 @@ public class VendorProductsFragment extends Fragment {
         LoadVendorsProduct loadVendorsProduct = new LoadVendorsProduct();
         loadVendorsProduct.execute(userSharePrefs.getSharedPrefs("vendor_id"));
 
-        Cursor res = myDb.getNonExtraItems(userSharePrefs.getSharedPrefs("vendor_id"));
-
         clear_selection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,16 +147,8 @@ public class VendorProductsFragment extends Fragment {
             }
         }
 
-
-        float total_amt = 0.0f;
-        if (res.getCount() > 0) {
-            while (res.moveToNext()) {
-                int qty = Integer.parseInt(res.getString(3));
-                float amount = Float.parseFloat(res.getString(8));
-                total_amt = total_amt + (amount * qty);
-            }
-        }
-        total.setText(total_amt + "");
+        Utility utility = new Utility(context);
+        total.setText(utility.getCartItemsTotalAmount() + "");
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +215,37 @@ public class VendorProductsFragment extends Fragment {
                 });
             }
         });
+
+
+        StringBuffer ordered_item_json = new StringBuffer();
+        Cursor res3 = myDb.getAllItemsOfVendor(userSharePrefs.getSharedPrefs("vendor_id"));
+        ordered_item_json.append("[");
+        int i = 0;
+        float total_amt3 = 0.0f;
+        if (res3.getCount() > 0) {
+            while (res3.moveToNext()) {
+                i++;
+                ordered_item_json.append("{");
+                ordered_item_json.append("\"vpid\":" + "\"" + res3.getString(1) + "\",");
+                ordered_item_json.append("\"name\":" + "\"" + res3.getString(2) + "\",");
+                ordered_item_json.append("\"qty\":" + "\"" + res3.getString(3) + "\",");
+                ordered_item_json.append("\"extra\":" + "\"" + res3.getString(4) + "\",");
+                ordered_item_json.append("\"vendor_id\":" + "\"" + res3.getString(5) + "\",");
+                ordered_item_json.append("\"extra_qty\":" + "\"" + res3.getString(6) + "\",");
+                ordered_item_json.append("\"image\":" + "\"" + res3.getString(7) + "\",");
+                ordered_item_json.append("\"amount\":" + "\"" + res3.getString(8) + "\"");
+                ordered_item_json.append("\"vpvid\":" + "\"" + res3.getString(9) + "\"");
+                if (i < res3.getCount()) {
+                    ordered_item_json.append("},");
+                } else {
+                    ordered_item_json.append("}");
+                }
+
+            }
+        }
+        ordered_item_json.append("]");
+//        Log.d("asa", "OrderJson"+ ordered_item_json);
+
         return view;
     }
 
@@ -252,7 +276,7 @@ public class VendorProductsFragment extends Fragment {
                     Picasso.get().load(image_path).into(vendor_image);
 
 
-                    JSONArray productJsonArray = new JSONArray(jsonObject.getString("products"));
+                    JSONArray productJsonArray = new JSONArray(jsonObject.getString("data"));
                     product_list = ProductModel.fromJson(productJsonArray, context);
 
 
@@ -273,7 +297,7 @@ public class VendorProductsFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            String urls = context.getString(R.string.base_url).concat("vendor_products/");
+            String urls = context.getString(R.string.base_url).concat("vendor_products_with_variety_customer/");
             try {
                 URL url = new URL(urls);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -281,7 +305,7 @@ public class VendorProductsFragment extends Fragment {
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("vendor_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -289,7 +313,7 @@ public class VendorProductsFragment extends Fragment {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;

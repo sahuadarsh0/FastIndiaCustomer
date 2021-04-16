@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="80dp">
@@ -13,8 +12,10 @@
         android:minHeight="650dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -63,6 +64,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/profile"
                 app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toStartOf="@+id/profile" />
+
             <TextView
                 android:id="@+id/textView11"
                 style="@style/TextBlack"
@@ -127,6 +129,7 @@
                 style="@style/TextBlack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:hint="Start Typing"
                 android:inputType="textPersonName"
                 android:paddingStart="5dp"
@@ -135,18 +138,18 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
                 app:layout_constraintEnd_toStartOf="@+id/edit1"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView33" />
+                app:layout_constraintStart_toEndOf="@+id/textView37" />
 
             <TextView
                 android:id="@+id/textView37"
                 style="@style/TextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:text="Mobile"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@+id/textView33"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <TextView
                 android:id="@+id/mobile"
@@ -198,12 +201,12 @@
                 android:id="@+id/gps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="4dp"
                 android:background="@color/white"
                 android:src="@drawable/ic_gps"
                 app:layout_constraintBottom_toBottomOf="@+id/address"
-                app:layout_constraintEnd_toEndOf="@+id/address"
+                app:layout_constraintStart_toEndOf="@+id/address"
                 app:layout_constraintTop_toTopOf="@+id/address" />
 
             <TextView
@@ -222,11 +225,11 @@
                 style="@style/TextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:text="Email"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@+id/textView37"
-                app:layout_constraintTop_toBottomOf="@+id/textView37" />
+                app:layout_constraintTop_toBottomOf="@+id/mobile" />
 
 
             <TextView
@@ -234,22 +237,22 @@
                 style="@style/TextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:text="Home"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@+id/email_label"
-                app:layout_constraintTop_toBottomOf="@+id/email_label" />
+                app:layout_constraintTop_toBottomOf="@+id/email" />
 
             <TextView
                 android:id="@+id/address_label_2"
                 style="@style/TextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:text="Work"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@+id/address_label"
-                app:layout_constraintTop_toBottomOf="@+id/address_label" />
+                app:layout_constraintTop_toBottomOf="@+id/address" />
 
             <EditText
                 android:id="@+id/address2"
@@ -288,8 +291,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:paddingStart="5dp"
-                android:textSize="12sp"
                 android:text="Click Here"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/view6"
                 app:layout_constraintEnd_toEndOf="@+id/address2"
@@ -329,7 +332,6 @@
                 app:layout_constraintBottom_toTopOf="@+id/textView113"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView113" />
-
 
             <TextView
                 android:id="@+id/textView113"

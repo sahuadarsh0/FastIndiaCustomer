@@ -1,9 +1,7 @@
 package com.tecqza.gdm.fastindia;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,7 +39,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Random;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class CheckOutFragment extends Fragment implements PaymentResultListener {
@@ -59,14 +57,14 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
     String is_image_uploaded;
     Boolean is_extra_items;
 
-    public CheckOutFragment(Context context){
-        this.context=context;
-        processDialog=new ProcessDialog(context,"");
-        userSharedPrefs=new SharedPrefs(context, "USER");
+    public CheckOutFragment(Context context) {
+        this.context = context;
+        processDialog = new ProcessDialog(context, "");
+        userSharedPrefs = new SharedPrefs(context, "USER");
         myDb = new DatabaseHelper(context);
-        is_also_image="NO";
-        is_image_uploaded="NO";
-        is_extra_items=false;
+        is_also_image = "NO";
+        is_image_uploaded = "NO";
+        is_extra_items = false;
 
         Checkout.preload(context.getApplicationContext());
 
@@ -75,12 +73,12 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.view=inflater.inflate(R.layout.check_out_fragment, container, false);
+        this.view = inflater.inflate(R.layout.check_out_fragment, container, false);
 
-        address=view.findViewById(R.id.address);
-        landmark=view.findViewById(R.id.landmark);
+        address = view.findViewById(R.id.address);
+        landmark = view.findViewById(R.id.landmark);
 
-        if(userSharedPrefs.getSharedPrefs("address")!=null){
+        if (userSharedPrefs.getSharedPrefs("address") != null) {
             address.setText(userSharedPrefs.getSharedPrefs("address"));
         }
 
@@ -90,17 +88,17 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
             @Override
             public void onClick(View view) {
 
-                if(address.getText().toString().equals("")){
+                if (address.getText().toString().equals("")) {
                     Toast.makeText(context, "Address is mandetory field", Toast.LENGTH_SHORT).show();
-                }else if(landmark.getText().toString().equals("")){
+                } else if (landmark.getText().toString().equals("")) {
                     Toast.makeText(context, "Landmark is mandetory field", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
 
                     ordered_item_json = new StringBuffer();
                     Cursor res = myDb.getAllItemsOfVendor(userSharedPrefs.getSharedPrefs("vendor_id"));
                     ordered_item_json.append("[");
                     int i = 0;
-                    float total_amt=0.0f;
+                    float total_amt = 0.0f;
                     if (res.getCount() > 0) {
                         while (res.moveToNext()) {
                             i++;
@@ -121,31 +119,30 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
 
                             if (res.getString(7).equals("1")) {
                                 is_also_image = "YES";
-                                image_name=res.getString(2);
+                                image_name = res.getString(2);
                             }
                             if (res.getString(4).equals("1")) {
-                                is_extra_items=true;
+                                is_extra_items = true;
                             }
-                            int qty=Integer.parseInt(res.getString(3));
-                            float amount=Float.parseFloat(res.getString(8));
-                            total_amt=total_amt+(amount*qty);
+                            int qty = Integer.parseInt(res.getString(3));
+                            float amount = Float.parseFloat(res.getString(8));
+                            total_amt = total_amt + (amount * qty);
 
                         }
                     }
                     ordered_item_json.append("]");
 
-                    if(is_extra_items){
-                        if(is_also_image.equals("YES") && is_image_uploaded.equals("NO")){
+                    if (is_extra_items) {
+                        if (is_also_image.equals("YES") && is_image_uploaded.equals("NO")) {
                             UploadListImage uploadListImage = new UploadListImage();
                             uploadListImage.execute(image_name);
-                        }else{
+                        } else {
                             submission();
                         }
-                    }else{
+                    } else {
 
-                        startPayment((total_amt*1000)+"");
+                        startPayment((total_amt * 1000) + "");
                     }
-
 
 
                 }
@@ -170,7 +167,7 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
         /**
          * Reference to current activity
          */
-        AppCompatActivity activity=(AppCompatActivity) view.getContext();
+        AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
         /**
          * Pass your payment options to the Razorpay Checkout as a JSONObject
@@ -201,7 +198,7 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
             options.put("amount", amount);
 
             checkout.open(activity, options);
-        } catch(Exception e) {
+        } catch (Exception e) {
             Log.e("Error", "Error in starting Razorpay Checkout", e);
         }
     }
@@ -230,6 +227,7 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
             processDialog.dismiss();
             submission();
         }
+
         @Override
         protected String doInBackground(String... params) {
             uploadMultipart(params[0]);
@@ -260,9 +258,9 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
         }
     }
 
-    public void submission(){
+    public void submission() {
 
-        userSharedPrefs.setSharedPrefs("address",address.getText().toString());
+        userSharedPrefs.setSharedPrefs("address", address.getText().toString());
 
         SubmitData submitData = new SubmitData();
         submitData.execute(
@@ -300,7 +298,11 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
                         errors.append(errorJsonObject.getString("error")).append("\n");
                     }
                     builder.setMessage(errors);
-                    builder.show();
+
+                    AlertDialog dialog = builder.create();
+                    dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.yellow, null));
+                    dialog.show();
+//                    builder.show();
                 } else if (jsonObject.getString("status").equals("true")) {
                     builder.setTitle("Success");
                     builder.setMessage(jsonObject.getString("msg"));
@@ -312,7 +314,10 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
 //                          getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderPlacedFragment(context)).addToBackStack(null).commit();
                         }
                     });
-                    builder.show();
+
+                    AlertDialog dialog = builder.create();
+                    dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.yellow, null));
+                    dialog.show();
                 } else {
                     builder.setTitle("Error");
                     builder.setMessage(jsonObject.getString("msg"));
@@ -333,14 +338,14 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8") + "&" +
                         URLEncoder.encode("vendor_id", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") + "&" +
                         URLEncoder.encode("order_type", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8") + "&" +
                         URLEncoder.encode("state_id", "UTF-8") + "=" + URLEncoder.encode(params[3], "UTF-8") + "&" +
                         URLEncoder.encode("city_id", "UTF-8") + "=" + URLEncoder.encode(params[4], "UTF-8") + "&" +
-                        URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(params[5], "UTF-8")+ "&" +
-                        URLEncoder.encode("landmark", "UTF-8") + "=" + URLEncoder.encode(params[6], "UTF-8")+ "&" +
+                        URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(params[5], "UTF-8") + "&" +
+                        URLEncoder.encode("landmark", "UTF-8") + "=" + URLEncoder.encode(params[6], "UTF-8") + "&" +
                         URLEncoder.encode("ordered_items", "UTF-8") + "=" + URLEncoder.encode(params[7], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -348,7 +353,7 @@ public class CheckOutFragment extends Fragment implements PaymentResultListener 
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
