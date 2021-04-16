@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -49,7 +51,8 @@ public class OrderDetailsFragment extends Fragment {
     ProcessDialog processDialog;
     SharedPrefs userSharePrefs;
     View view;
-    private String order_id, delivery_boy_mobile;
+    private final String order_id;
+    private String delivery_boy_mobile;
     private TextView total;
 
     private ImageView vendor_image;
@@ -57,6 +60,8 @@ public class OrderDetailsFragment extends Fragment {
     LinearLayout extra_label;
     TextView text_address, phone, date, payment_mode, order_no, call_delivery_boy, call_vendor, customer_address;
     TextView status;
+    TextView pay_now;
+    float amount;
 
     ConstraintLayout view_all_history;
 
@@ -97,6 +102,7 @@ public class OrderDetailsFragment extends Fragment {
         call_vendor = view.findViewById(R.id.call_vendor);
         customer_address = view.findViewById(R.id.customer_address);
         status = view.findViewById(R.id.status);
+        pay_now = view.findViewById(R.id.pay_now);
 
         view_all_history = view.findViewById(R.id.constraintLayout2);
 
@@ -131,6 +137,17 @@ public class OrderDetailsFragment extends Fragment {
             }
         });
 
+
+        pay_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PaymentActivity.class);
+
+                intent.putExtra("amount", String.valueOf(amount*100));
+                intent.putExtra("order_id", order_id);
+                startActivityForResult(intent,1);
+            }
+        });
 
         return view;
     }
@@ -169,6 +186,10 @@ public class OrderDetailsFragment extends Fragment {
                     customer_address.setText(order.customer_address);
                     status.setText(order.status);
 
+                    if (order.payment_mode.equals("COD")) {
+                        pay_now.setVisibility(View.VISIBLE);
+                    }
+
 
                     if (status.getText().toString().equals("PENDING")) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -192,15 +213,14 @@ public class OrderDetailsFragment extends Fragment {
                         }
                     }
 
-                    total.setText(order.total_amount);
+                    amount = Float.parseFloat(order.total_amount);
+                    total.setText("Rs. " + amount);
                     if (!order.status.equals("ALLOTED")) {
                         call_delivery_boy.setVisibility(View.INVISIBLE);
                     }
 
                     delivery_boy_mobile = order.delivery_boy_mobile;
 
-                    float amount = Float.parseFloat(order.total_amount) + Float.parseFloat(order.amount) + Float.parseFloat(order.extra_amount);
-                    total.setText(amount + "");
 
                     String image_path = context.getString(R.string.file_base_url) + "vendors/" + order.vendor_image;
                     Picasso.get().load(image_path).into(vendor_image);
@@ -248,7 +268,7 @@ public class OrderDetailsFragment extends Fragment {
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("order_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
 
                 bufferedWriter.write(post_Data);
@@ -256,7 +276,7 @@ public class OrderDetailsFragment extends Fragment {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -269,5 +289,12 @@ public class OrderDetailsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderDetailsFragment(context,order_id)).commit();
+
+    }
 }
+

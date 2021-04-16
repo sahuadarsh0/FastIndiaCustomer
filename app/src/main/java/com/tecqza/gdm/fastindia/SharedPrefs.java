@@ -8,7 +8,7 @@ public class SharedPrefs {
     SharedPreferences.Editor edit;
 
     public SharedPrefs(Context context, String tag){
-        sp = context.getSharedPreferences(tag, context.MODE_PRIVATE);
+        sp = context.getSharedPreferences(tag, Context.MODE_PRIVATE);
         edit = sp.edit();
     }
 

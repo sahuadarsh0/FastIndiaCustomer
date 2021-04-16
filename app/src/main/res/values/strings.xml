@@ -1,17 +1,13 @@
 <resources>
     <string name="app_name">FastIndia</string>
 
-    <string name="base_url">https://www.admin.fastindia.app/app/</string>
-    <string name="file_base_url">https://www.admin.fastindia.app/files/</string>
+        <string name="base_url">https://www.admin.fastindia.app/app/</string>
+        <string name="file_base_url">https://www.admin.fastindia.app/files/</string>
 
-<!--        <string name="base_url">http://192.168.1.23/gmd2/app/</string>-->
-<!--        <string name="file_base_url">http://192.168.1.23/gmd2/files/</string>-->
+<!--    <string name="base_url">http://192.168.1.21/gmd2/app/</string>-->
+<!--    <string name="file_base_url">http://192.168.1.21/gmd2/files/</string>-->
 
-    <string name="navigation_drawer_open">Open Navigation</string>
-    <string name="navigation_drawer_close">Close Navigation</string>
-    <string name="t_c"><![CDATA[T & C]]></string>
     <string name="about">FASTINDIA is a free home delivery app. It is operated by Municipal Corporation Bilaspur and Tecqza Technology software Private Limited.  We provide free home delivery of groceries, medicines, dairy products in lockdown. Currently, the entire country has created an atmosphere of awareness to fight the crisis. The government is appealing to everyone not to make haste and maintain social distance and stay at home. People are staying in their homes during the lockdown situation, but still have to move out of the house to get groceries, dairy and essential medicines.  While doing so is not more appropriate. In the condition of Lockdown, We work for free home delivery of groceries and dairies and medicines goods, we deliver these items.  We deliver these goods to your home for easy delivery. You can take home delivery of goods you need through our app and get a free home delivery. In home delivery of instant you only give us a reasonable price for the products you need.  This process takes place through online(Paytm and PhonePe) or cash on delivery. We will deliver goods to your home as per your needs and demands.</string>
-    <string name="resend_otp"><b>Resend</b> OTP</string>
     <string name="tag_line">Always on time</string>
     <string name="tag_line1">Always</string>
     <string name="tag_line2">on time</string>

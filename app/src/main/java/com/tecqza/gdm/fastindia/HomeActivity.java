@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.razorpay.PaymentResultListener;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements PaymentResultListener {
 
     BottomNavigationView bottomNavigationView;
     Context context;
@@ -47,18 +48,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-//        String fragment = getIntent().getStringExtra("fragment");
-//        String orderId = getIntent().getStringExtra("extra");
-//
-//
-//        Log.d("asa", "fragment: " + fragment);
-//        Log.d("asa", "Order_id: " + orderId);
-//
-//        if (fragment != null && fragment.equals("ORDER_DETAIL")) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderFragment(context, orderId)).addToBackStack(null).commit();
-//        } else if (fragment != null && fragment.equals("NOTIFY")) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new NotificationsFragment(context)).addToBackStack(null).commit();
-//        }
 
         String open = bundle.getString("open", null);
         if (bundle != null && open != null) {
@@ -100,9 +89,6 @@ public class HomeActivity extends AppCompatActivity {
         String fragment = getIntent().getStringExtra("fragment");
         String orderId = getIntent().getStringExtra("extra");
 
-
-        Log.d("asa", "fragment: " + fragment);
-        Log.d("asa", "Order_id: " + orderId);
 
         if (fragment != null && fragment.equals("ORDER_DETAIL")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new OrderFragment(context, orderId)).addToBackStack(null).commit();
@@ -152,5 +138,26 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
+
     }
+
+
+    @Override
+    public void onPaymentSuccess(String s) {
+//        RecordPayment recordPayment = new RecordPayment();
+//        recordPayment.execute(s,order_id);
+
+
+    }
+
+
+    @Override
+    public void onPaymentError(int i, String s) {
+
+        Log.d("asa", "onPaymentError: " + s);
+    }
+
 }

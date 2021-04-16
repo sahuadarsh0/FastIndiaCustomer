@@ -19,6 +19,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String col_7 = "extra_qty";
     public static final String col_8 = "image";
     public static final String col_9 = "amount";
+    public static final String col_10 = "vpvid";
+
 
     public DatabaseHelper(Context context) {
         super(context, db_name, null, 1);
@@ -27,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + table + " (id INTEGER PRIMARY KEY AUTOINCREMENT, vpid VARCHAR(11), name VARCHAR(150), qty String(11), extra VARCHAR(2), vendor_id VARCHAR(11), extra_qty VARCHAR(50), image VARCHAR(10) DEFAULT '0', amount VARCHAR(15) DEFAULT '0.0' )");
+        db.execSQL("create table " + table + " (id INTEGER PRIMARY KEY AUTOINCREMENT, vpid VARCHAR(11), name VARCHAR(150), qty String(11), extra VARCHAR(2), vendor_id VARCHAR(11), extra_qty VARCHAR(50), image VARCHAR(10) DEFAULT '0', amount VARCHAR(15) DEFAULT '0.0', vpvid VARCHAR(11) )");
     }
 
     @Override
@@ -36,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String vpid, String name, String qty, String extra, String vendor_id, String amount) {
+    public boolean insertData(String vpid, String name, String qty, String extra, String vendor_id, String amount, String vpvid) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(col_2, vpid);
@@ -45,14 +47,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(col_5, extra);
         contentValues.put(col_6, vendor_id);
         contentValues.put(col_9, amount);
+        contentValues.put(col_10, vpvid);
 
         long res = db.insert(table, null, contentValues);
 
-        if (res == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return res != -1;
     }
 
     public boolean insertExtraItem(String name, String extra_qty, String vendor_id) {
@@ -65,11 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long res = db.insert(table, null, contentValues);
 
-        if (res == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return res != -1;
     }
 
     public boolean insertProductListImage(String name, String vendor_id) {
@@ -82,11 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long res = db.insert(table, null, contentValues);
 
-        if (res == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return res != -1;
     }
 
 
@@ -121,6 +112,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("delete from " + table + " where vendor_id = " + "'" + vendor_id + "'");
     }
 
+
+
     public Cursor getExtraItems(String vendor_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + table + " where extra ='1' AND vendor_id=" + "'" + vendor_id + "'", null);
@@ -153,6 +146,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getItemOfVPId(String vpid) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + table + " where vpid = " + "'" + vpid + "'", null);
+        return res;
+    }
+
+    public Cursor getItemOfVpvId(String vpvid) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + table + " where vpvid = " + "'" + vpvid + "'", null);
         return res;
     }
 

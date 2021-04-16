@@ -33,6 +33,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
@@ -79,11 +80,11 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.VendorView
         }
 
         if (!vendor.favourite_vendor_id.equals("null")) {
-            holder.fav.setVisibility(View.GONE);
+            holder.fav.setVisibility(View.INVISIBLE);
             holder.fav_filled.setVisibility(View.VISIBLE);
         } else {
             holder.fav.setVisibility(View.VISIBLE);
-            holder.fav_filled.setVisibility(View.GONE);
+            holder.fav_filled.setVisibility(View.INVISIBLE);
         }
         String image_path = context.getString(R.string.file_base_url) + "vendors/" + vendor.image;
         Picasso.get().load(image_path).into(holder.image);
@@ -102,7 +103,6 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.VendorView
                     } else {
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).addToBackStack(null).commit();
                     }
-
                 } else
                     Toast.makeText(context, "Vendor is Closed", Toast.LENGTH_SHORT).show();
             }
@@ -190,7 +190,7 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.VendorView
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8") + "&" +
                         URLEncoder.encode("vendor_id", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8");
 
@@ -199,7 +199,7 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.VendorView
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -243,7 +243,7 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.VendorView
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8") + "&" +
                         URLEncoder.encode("vendor_id", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8");
 
@@ -252,7 +252,7 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.VendorView
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;

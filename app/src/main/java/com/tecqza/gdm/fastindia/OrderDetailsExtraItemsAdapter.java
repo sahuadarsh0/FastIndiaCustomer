@@ -41,11 +41,11 @@ import java.util.ArrayList;
 
 public class OrderDetailsExtraItemsAdapter extends RecyclerView.Adapter<OrderDetailsExtraItemsAdapter.VendorViewHolder> {
 
-    private ArrayList<OrderedItemModel> items;
+    private final ArrayList<OrderedItemModel> items;
     private OrderedItemModel item;
-    private Context context;
-    private ProcessDialog processDialog;
-    private SharedPrefs userSharedPrefs;
+    private final Context context;
+    private final ProcessDialog processDialog;
+    private final SharedPrefs userSharedPrefs;
     TextView total;
 
     public OrderDetailsExtraItemsAdapter(ArrayList<OrderedItemModel> items, Context context, TextView total) {

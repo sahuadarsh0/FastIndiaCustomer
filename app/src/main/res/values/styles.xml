@@ -12,15 +12,6 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorSecondary">@color/white</item>
-    </style>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-    </style>
-
     <style name="TextStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
@@ -183,17 +174,6 @@
         <item name="strokeWidth">1dp</item>
         <item name="android:padding">0dp</item>
         <item name="strokeColor">@color/white</item>
-    </style>
-
-
-    <style name="DashboardSummaryNumbers">
-        <item name="android:textSize">25dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="DialogTheme" parent="@android:style/Widget.Material.Light.DatePicker">
-        <item name="colorAccent">@color/yellow</item>
     </style>
 
 </resources>

@@ -18,7 +18,7 @@
         android:drawableStart="@drawable/ic_location"
         android:drawablePadding="10dp"
         android:maxLines="1"
-        android:paddingVertical="10dp"
+        android:paddingVertical="7dp"
         android:paddingStart="10dp"
         android:text="B-75 Krishna Vihar Koni Bilaspur"
         android:textColor="@color/gray"
@@ -328,7 +328,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Your Total Amount has been uploaded"
+                    android:text="Your Total Amount has been uploaded (inclusive of all taxes)"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -336,16 +336,43 @@
 
 
                 <TextView
+                    android:id="@+id/total_amount_rs"
+                    style="@style/TextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Rs "
+                    android:textSize="22sp"
+                    app:layout_constraintEnd_toStartOf="@+id/total_amount"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView129" />
+
+
+                <TextView
+                    android:id="@+id/total_amount"
+                    style="@style/TextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="2000"
+                    android:textSize="22sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.54"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView129" />
+
+                <TextView
                     android:id="@+id/textVi321"
                     style="@style/TextBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:text="Choose your Payment Method"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/textView129"
                     app:layout_constraintStart_toStartOf="@+id/textView129"
-                    app:layout_constraintTop_toBottomOf="@+id/textView129" />
+                    app:layout_constraintTop_toBottomOf="@+id/total_amount" />
 
                 <TextView
                     android:id="@+id/cod"
@@ -375,7 +402,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="64dp"
-                    android:background="@drawable/search_selector"
+                    android:background="@drawable/green_back"
                     android:gravity="center"
                     android:paddingHorizontal="10dp"
                     android:paddingTop="10dp"
@@ -392,7 +419,7 @@
                     android:id="@+id/imageView119"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="124dp"
+                    android:layout_marginTop="142dp"
                     android:src="@drawable/rider"
                     android:visibility="visible"
                     app:layout_constraintEnd_toStartOf="@+id/textView131"

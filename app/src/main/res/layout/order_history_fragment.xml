@@ -15,8 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent=".9"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="1.0"/>
 
     <TextView
         android:id="@+id/textview13"
@@ -37,13 +36,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:text="Filters"
-        android:textAllCaps="true"
+        android:text="FILTER"
         android:textColor="@color/yellow"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textview13"
         app:layout_constraintEnd_toStartOf="@+id/filter" />
+
 
     <ImageView
         android:id="@+id/filter"
@@ -61,12 +60,12 @@
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textview13"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:itemCount="4"
-        android:paddingBottom="80dp"
+        tools:itemCount="2"
         tools:listitem="@layout/item_orders" />
 
 

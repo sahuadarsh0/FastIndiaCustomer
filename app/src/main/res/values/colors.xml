@@ -38,6 +38,7 @@
     <color name="yellow">#FEBE14</color>
     <color name="transparent">#00000000</color>
     <color name="semi_transparent">#D5000000</color>
+    <color name="low_transparent">#E0FFFFFF</color>
     <color name="light_yellow">#FDD835</color>
     <color name="light_graay">#767676</color>
     <color name="input_gray">#9E9E9E</color>

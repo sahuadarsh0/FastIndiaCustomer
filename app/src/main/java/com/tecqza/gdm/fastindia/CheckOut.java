@@ -44,12 +44,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.UUID;
 
 public class CheckOut extends AppCompatActivity implements PaymentResultListener {
 
-    Button order_now;
+    TextView order_now;
     ProcessDialog processDialog;
     Context context;
     SharedPrefs userSharedPrefs;
@@ -168,10 +169,11 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
                             }
 
 
+
+
                         }
                     }
                     ordered_item_json.append("]");
-
 
                     if (total_amt > 100) {
                         if (is_extra_items) {
@@ -216,38 +218,29 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
         if (userSharedPrefs.getSharedPrefs("vendor_image") != null) {
             String image_path = context.getString(R.string.file_base_url) + "vendors/" + userSharedPrefs.getSharedPrefs("vendor_image");
             Picasso.get().load(image_path).into(vendor_image);
-
-
             vendor_mobile.setText(userSharedPrefs.getSharedPrefs("vendor_mobile"));
             vendor_name.setText(userSharedPrefs.getSharedPrefs("business_name"));
             vendor_address.setText(userSharedPrefs.getSharedPrefs("vendor_address"));
         }
-
-
         disableEditText(landmark);
         disableEditText(address);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (change.getText().toString().equals("Save")) {
-
                     change.setText("Change");
                     disableEditText(landmark);
                     disableEditText(address);
-
                 } else if (change.getText().toString().equals("Change")) {
                     change.setText("Save");
-
                     enableEditText(address);
                     address.setSelection(address.getText().length());
                     address.requestFocus();
                     enableEditText(landmark);
                     enableEditText(address);
-
                 }
             }
         });
-
 
     }
 
@@ -333,9 +326,65 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
         recordPayment.execute(s);
     }
 
+
     @Override
     public void onPaymentError(int i, String s) {
 
+    }
+
+    class RecordPayment extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            processDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                if (jsonObject.getString("status").equals("true")) {
+                    submission(jsonObject.getString("id"));
+                } else {
+                    builder.setTitle("Error");
+                    builder.setMessage(jsonObject.getString("msg"));
+                }
+            } catch (JSONException e) {
+//                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+            }
+            processDialog.dismiss();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String urls = context.getString(R.string.base_url).concat("recordPayment/");
+            try {
+                URL url = new URL(urls);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+                String post_Data = URLEncoder.encode("payment_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
+
+                bufferedWriter.write(post_Data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                String result = "", line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                return result;
+            } catch (Exception e) {
+                return e.toString();
+            }
+        }
     }
 
 
@@ -444,7 +493,7 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
                     builder.setMessage(jsonObject.getString("msg"));
                 }
             } catch (JSONException e) {
-//                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             }
             processDialog.dismiss();
         }
@@ -459,7 +508,7 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
                 String post_Data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8") + "&" +
                         URLEncoder.encode("vendor_id", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") + "&" +
                         URLEncoder.encode("order_type", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8") + "&" +
@@ -475,7 +524,7 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String result = "", line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -487,61 +536,6 @@ public class CheckOut extends AppCompatActivity implements PaymentResultListener
         }
     }
 
-
-    class RecordPayment extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            processDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                if (jsonObject.getString("status").equals("true")) {
-                    submission(jsonObject.getString("id"));
-                } else {
-                    builder.setTitle("Error");
-                    builder.setMessage(jsonObject.getString("msg"));
-                }
-            } catch (JSONException e) {
-//                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-            }
-            processDialog.dismiss();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String urls = context.getString(R.string.base_url).concat("recordPayment/");
-            try {
-                URL url = new URL(urls);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.setDoOutput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_Data = URLEncoder.encode("payment_id", "UTF-8") + "=" + URLEncoder.encode(params[0], "UTF-8");
-
-                bufferedWriter.write(post_Data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "", line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                return result;
-            } catch (Exception e) {
-                return e.toString();
-            }
-        }
-    }
 
 
 }
