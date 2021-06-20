@@ -1,2 +1,3 @@
-rootProject.name='FastIndia'
+rootProject.name = "FastIndia"
 include ':app'
+include ':AndroidUtils'
