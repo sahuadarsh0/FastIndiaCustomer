@@ -1,26 +1,22 @@
-package technited.minds.androidutils;
+package technited.minds.androidutils
 
-import android.app.Dialog;
-import android.content.Context;
-import android.widget.ImageView;
+import android.app.Dialog
+import android.content.Context
+import technited.minds.androidutils.R
 
-public class ProcessDialog {
-    Context context;
-    Dialog dialog;
-
-    public ProcessDialog(Context context) {
-        this.context = context;
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.process_dialog);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCancelable(false);
+class ProcessDialog(var context: Context) {
+    var dialog: Dialog = Dialog(context)
+    fun show() {
+        dialog.show()
     }
 
-    public void show() {
-        dialog.show();
+    fun dismiss() {
+        dialog.dismiss()
     }
 
-    public void dismiss() {
-        dialog.dismiss();
+    init {
+        dialog.setContentView(R.layout.process_dialog)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
     }
 }

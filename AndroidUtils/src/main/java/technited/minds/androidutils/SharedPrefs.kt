@@ -1,32 +1,26 @@
-package technited.minds.androidutils;
+package technited.minds.androidutils
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Context
+import android.content.SharedPreferences
 
-public class SharedPrefs {
-    SharedPreferences sp;
-    SharedPreferences.Editor edit;
-
-    public SharedPrefs(Context context, String tag) {
-        sp = context.getSharedPreferences(tag, Context.MODE_PRIVATE);
-        edit = sp.edit();
+class SharedPrefs(context: Context, tag: String?) {
+    var sp: SharedPreferences = context.getSharedPreferences(tag, Context.MODE_PRIVATE)
+    var edit: SharedPreferences.Editor = sp.edit()
+    operator fun set(key: String?, value: String?) {
+        edit.putString(key, value)
+        edit.commit()
     }
 
-    public void set(String key, String value) {
-        edit.putString(key, value);
-        edit.commit();
+    fun apply() {
+        edit.apply()
     }
 
-    public void apply() {
-        edit.apply();
+    operator fun get(key: String?): String? {
+        return sp.getString(key, null)
     }
 
-    public String get(String key) {
-        return sp.getString(key, null);
-    }
-
-    public void clearAll() {
-        sp.edit().clear().apply();
+    fun clearAll() {
+        sp.edit().clear().apply()
     }
 
 }
