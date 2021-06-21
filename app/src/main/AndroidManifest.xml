@@ -14,9 +14,12 @@
         android:theme="@style/Theme.FastIndia"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".RegisterActivity"
-            android:exported="true" />
-        <activity android:name=".MainActivity" />
+            android:name=".ui.RegisterActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WebPage" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.WebPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.LoginActivity"
             android:screenOrientation="portrait" />
     </application>
 

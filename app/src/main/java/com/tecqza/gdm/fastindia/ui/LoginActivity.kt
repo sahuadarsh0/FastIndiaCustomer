@@ -1,4 +1,4 @@
-package com.tecqza.gdm.fastindia
+package com.tecqza.gdm.fastindia.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.tecqza.gdm.fastindia.data.CustomerService
 import com.tecqza.gdm.fastindia.databinding.ActivityLoginBinding
 import com.tecqza.gdm.fastindia.model.Response
 import retrofit2.Call
@@ -72,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                         userSharedPreferences.set("name", name)
                         userSharedPreferences.set("mobile", mobile)
                         userSharedPreferences.set("emailId", emailId)
-                        userSharedPreferences.set("address",address)
+                        userSharedPreferences.set("address", address)
                         userSharedPreferences.set("cityId", cityId)
                         userSharedPreferences.set("stateId", stateId)
                         userSharedPreferences.apply()
@@ -106,10 +107,11 @@ class LoginActivity : AppCompatActivity() {
         startActivity(i)
         finish()
     }
+
     private fun openRegister() {
         Log.d("asa", "openRegister: asa")
         val i = Intent(this, RegisterActivity::class.java)
-        i.putExtra("mobile",binding.mobile.text.toString())
+        i.putExtra("mobile", binding.mobile.text.toString())
         startActivity(i)
         finish()
     }

@@ -1,8 +1,9 @@
-package com.tecqza.gdm.fastindia
+package com.tecqza.gdm.fastindia.ui
 
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
+import com.tecqza.gdm.fastindia.R
 
 class WebPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

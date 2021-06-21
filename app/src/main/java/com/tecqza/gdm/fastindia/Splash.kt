@@ -12,8 +12,11 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.tecqza.gdm.fastindia.data.CustomerService
+import com.tecqza.gdm.fastindia.data.Service
 import com.tecqza.gdm.fastindia.model.Check
 import com.tecqza.gdm.fastindia.model.CheckUpdate
+import com.tecqza.gdm.fastindia.ui.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import technited.minds.androidutils.MD
@@ -75,6 +78,7 @@ class Splash : AppCompatActivity() {
                         1 / 0
                 }
             }
+
             override fun onFailure(call: Call<Check?>, t: Throwable) {
             }
         })
@@ -106,6 +110,7 @@ class Splash : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onFailure(call: Call<CheckUpdate?>, t: Throwable) {
             }
         })

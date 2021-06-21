@@ -1,4 +1,4 @@
-package com.tecqza.gdm.fastindia
+package com.tecqza.gdm.fastindia.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.tecqza.gdm.fastindia.data.CustomerService
 import com.tecqza.gdm.fastindia.databinding.ActivityRegisterBinding
 import com.tecqza.gdm.fastindia.model.StatesCities
 import retrofit2.Call

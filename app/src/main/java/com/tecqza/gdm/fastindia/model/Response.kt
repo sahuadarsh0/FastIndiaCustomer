@@ -12,21 +12,21 @@ data class Response(
 data class Data(
 
     @field:SerializedName("email_id")
-	val emailId: String? = null,
-	val image: String? = null,
-	val address: String? = null,
-	val mobile: String? = null,
-	val name: String? = null,
+    val emailId: String? = null,
+    val image: String? = null,
+    val address: String? = null,
+    val mobile: String? = null,
+    val name: String? = null,
 
     @field:SerializedName("state_id")
-	val stateId: String? = null,
+    val stateId: String? = null,
 
-	val photoUrl: String? = null,
+    val photoUrl: String? = null,
     @field:SerializedName("customer_id")
-	val customerId: String? = null,
+    val customerId: String? = null,
 
     @field:SerializedName("city_id")
-	val cityId: String? = null,
+    val cityId: String? = null,
 
-)
+    )
 
