@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         processDialog = ProcessDialog(this)
         userSharedPreferences = SharedPrefs(this, "USER")
 
-        if (!userSharedPreferences.get("name").isNullOrEmpty()) {
+        if (!userSharedPreferences["name"].isNullOrEmpty()) {
             openDashboard()
         }
         binding.apply {
@@ -70,12 +70,12 @@ class LoginActivity : AppCompatActivity() {
                     otp = response.body()?.otp.toString()
                     transfer = responseData.message.toString()
                     responseData.data?.apply {
-                        userSharedPreferences.set("name", name)
-                        userSharedPreferences.set("mobile", mobile)
-                        userSharedPreferences.set("emailId", emailId)
-                        userSharedPreferences.set("address", address)
-                        userSharedPreferences.set("cityId", cityId)
-                        userSharedPreferences.set("stateId", stateId)
+                        userSharedPreferences["name"] = name
+                        userSharedPreferences["mobile"] = mobile
+                        userSharedPreferences["emailId"] = emailId
+                        userSharedPreferences["address"] = address
+                        userSharedPreferences["cityId"] = cityId
+                        userSharedPreferences["stateId"] = stateId
                         userSharedPreferences.apply()
                     }
                 }
@@ -102,14 +102,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun openDashboard() {
-        Log.d("asa", "openDashboard: asa")
         val i = Intent(this, MainActivity::class.java)
         startActivity(i)
         finish()
     }
 
     private fun openRegister() {
-        Log.d("asa", "openRegister: asa")
         val i = Intent(this, RegisterActivity::class.java)
         i.putExtra("mobile", binding.mobile.text.toString())
         startActivity(i)

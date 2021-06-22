@@ -7,5 +7,6 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_profile">Profile</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Orders</string>
+    <string name="title_logout">Logout</string>
 </resources>

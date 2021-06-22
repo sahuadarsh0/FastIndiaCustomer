@@ -87,12 +87,12 @@ class RegisterActivity : AppCompatActivity() {
                 if (response.isSuccessful && response.body()?.error.equals("0")) {
                     Toast.makeText(this@RegisterActivity, "Registered", Toast.LENGTH_SHORT).show()
                     binding.apply {
-                        userSharedPreferences.set("name", name.text.toString())
-                        userSharedPreferences.set("mobile", mobileNo.text.toString())
-                        userSharedPreferences.set("emailId", emailId.text.toString())
-                        userSharedPreferences.set("address", address.text.toString())
-                        userSharedPreferences.set("cityId", cityId)
-                        userSharedPreferences.set("stateId", stateId)
+                        userSharedPreferences["name"] = name.text.toString()
+                        userSharedPreferences["mobile"] = mobileNo.text.toString()
+                        userSharedPreferences["emailId"] = emailId.text.toString()
+                        userSharedPreferences["address"] = address.text.toString()
+                        userSharedPreferences["cityId"] = cityId
+                        userSharedPreferences["stateId"] = stateId
                         userSharedPreferences.apply()
                     }
                     openDashboard()
