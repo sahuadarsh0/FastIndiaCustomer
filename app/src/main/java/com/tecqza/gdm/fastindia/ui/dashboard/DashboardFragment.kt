@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tecqza.gdm.fastindia.databinding.FragmentDashboardBinding
+import com.tecqza.gdm.fastindia.model.Vendors
 import com.tecqza.gdm.fastindia.ui.WebPage
 import com.tecqza.gdm.fastindia.ui.adapters.VendorAdapter
 
@@ -41,6 +45,25 @@ class DashboardFragment : Fragment() {
     private fun initRecyclerView() {
         binding.vendorList.layoutManager = LinearLayoutManager(context)
         binding.vendorList.adapter = adapter
+        adapter.listener = object : VendorAdapter.ItemClickListener {
+            override fun onItemClickListener(vendor: Vendors, imageView: ImageView) {
+
+                if (vendor.url.isNullOrBlank()) {
+                    val extras = FragmentNavigatorExtras(
+                        imageView to "vendor"
+                    )
+                    val action = DashboardFragmentDirections
+                        .actionNavigationDashboardToProductsFragment(
+                            vendor.vendorId!!,
+                            vendor.logo!!,
+                            vendor.mobile!!,
+                            vendor.name!!
+                        )
+                    findNavController().navigate(action, extras)
+                }
+                else startWeb(vendor.url)
+            }
+        }
         getData()
     }
 

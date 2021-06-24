@@ -1,10 +1,10 @@
-package com.tecqza.gdm.fastindia.ui.notifications
+package com.tecqza.gdm.fastindia.ui.order
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class OrdersViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"

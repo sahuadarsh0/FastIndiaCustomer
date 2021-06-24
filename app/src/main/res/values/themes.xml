@@ -16,7 +16,7 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="windowNoTitle">true</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
-
+        <item name="android:windowActivityTransitions">true</item>
         <!-- Customize your theme here. -->
     </style>
 

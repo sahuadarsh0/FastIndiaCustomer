@@ -15,11 +15,35 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.tecqza.gdm.fastindia.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_navigation_dashboard_to_productsFragment"
+            app:destination="@id/productsFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.tecqza.gdm.fastindia.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id=" @+id/navigation_orders"
+        android:name="com.tecqza.gdm.fastindia.ui.order.OrdersFragment"
+        android:label="@string/title_orders"
+        tools:layout="@layout/fragment_orders" />
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.tecqza.gdm.fastindia.ui.products.ProductsFragment"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products">
+        <argument
+            android:name="vendor_id"
+            app:argType="string" />
+        <argument
+            android:name="vendor_image"
+            app:argType="string" />
+        <argument
+            android:name="vendor_mobile"
+            app:argType="string" />
+        <argument
+            android:name="vendor_name"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

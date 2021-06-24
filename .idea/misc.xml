@@ -4,17 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/drawable/bottom_nav_item_color.xml" value="0.35625" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/drawable/ic_cart_add.xml" value="0.35625" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/drawable/ic_logout.xml" value="0.35625" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/drawable/ic_order.xml" value="0.35625" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/drawable/ic_user.xml" value="0.35625" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/activity_login.xml" value="0.3182291666666667" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/activity_main2.xml" value="0.3359375" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/activity_register.xml" value="0.3182291666666667" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/activity_web_page.xml" value="0.17864583333333334" />
-        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/fragment_dashboard.xml" value="0.329417773237998" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/fragment_home.xml" value="0.3359375" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/fragment_orders.xml" value="0.3182291666666667" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/fragment_products.xml" value="0.33" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/list_product.xml" value="0.25" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/list_vendor.xml" value="0.3359375" />
+        <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/layout/products_fragment.xml" value="0.3182291666666667" />
         <entry key="..\:/Important_Docs/Projects/fastindia/Customer/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3359375" />
       </map>
     </option>

@@ -1,19 +1,13 @@
-package com.tecqza.gdm.fastindia.data
+package com.tecqza.gdm.fastindia.data.remote
 
 import android.util.Log
-import com.tecqza.gdm.fastindia.model.CheckUpdate
-import com.tecqza.gdm.fastindia.model.Response
-import com.tecqza.gdm.fastindia.model.StatesCities
-import com.tecqza.gdm.fastindia.model.Vendors
+import com.tecqza.gdm.fastindia.model.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface CustomerService {
 
@@ -24,6 +18,11 @@ interface CustomerService {
 
     @GET("vendor/vendorList")
     suspend fun getVendorList(): retrofit2.Response<ArrayList<Vendors>?>?
+
+    @GET("vendor/products/{vendorId}")
+    suspend fun getProductList(
+        @Path("vendorId") vendorId: String?
+    ): retrofit2.Response<ArrayList<Products>?>?
 
     @FormUrlEncoded
     @POST("customer/register")
@@ -49,8 +48,9 @@ interface CustomerService {
     companion object {
 
         var BASE_URL = "http://fastindia.app/api/"
-        var ASSETS_URL = "http://fastindia.app/uploads/customer/"
+        var CUSTOMER_URL = "http://fastindia.app/uploads/customer/"
         var VENDOR_URL = "http://fastindia.app/uploads/vendor/"
+        var PRODUCT_URL = "http://fastindia.app/uploads/product/"
 
         fun create(): CustomerService {
 

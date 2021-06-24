@@ -1,4 +1,4 @@
-package com.tecqza.gdm.fastindia.data
+package com.tecqza.gdm.fastindia.data.remote
 
 import android.util.Log
 import com.tecqza.gdm.fastindia.model.Check

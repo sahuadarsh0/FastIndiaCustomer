@@ -2,12 +2,11 @@ package com.tecqza.gdm.fastindia.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.tecqza.gdm.fastindia.data.CustomerService
+import com.tecqza.gdm.fastindia.data.remote.CustomerService
 import com.tecqza.gdm.fastindia.databinding.ActivityLoginBinding
 import com.tecqza.gdm.fastindia.model.Response
 import retrofit2.Call
@@ -55,8 +54,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
 
     private fun send(mobile: String) {

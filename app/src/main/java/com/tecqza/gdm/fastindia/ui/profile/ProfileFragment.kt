@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.tecqza.gdm.fastindia.data.CustomerService
+import com.tecqza.gdm.fastindia.data.remote.CustomerService
 import com.tecqza.gdm.fastindia.databinding.FragmentProfileBinding
 import com.tecqza.gdm.fastindia.model.StatesCities
 import retrofit2.Call

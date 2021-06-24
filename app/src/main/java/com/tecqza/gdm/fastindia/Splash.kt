@@ -12,8 +12,8 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.tecqza.gdm.fastindia.data.CustomerService
-import com.tecqza.gdm.fastindia.data.Service
+import com.tecqza.gdm.fastindia.data.remote.CustomerService
+import com.tecqza.gdm.fastindia.data.remote.Service
 import com.tecqza.gdm.fastindia.model.Check
 import com.tecqza.gdm.fastindia.model.CheckUpdate
 import com.tecqza.gdm.fastindia.ui.LoginActivity
