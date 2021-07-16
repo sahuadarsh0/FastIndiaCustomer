@@ -47,7 +47,7 @@ class Splash : AppCompatActivity() {
                     handler.postDelayed({
                         handler1.removeCallbacks(runnable)
 
-                        checkUser();
+                        checkUser()
                     }, 3000)
                 }
             }

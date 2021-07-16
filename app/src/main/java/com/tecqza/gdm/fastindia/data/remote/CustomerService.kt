@@ -51,6 +51,7 @@ interface CustomerService {
         var CUSTOMER_URL = "http://fastindia.app/uploads/customer/"
         var VENDOR_URL = "http://fastindia.app/uploads/vendor/"
         var PRODUCT_URL = "http://fastindia.app/uploads/product/"
+        var SLIDER_URL = "http://fastindia.app/uploads/slider/"
 
         fun create(): CustomerService {
 

@@ -7,9 +7,6 @@ data class Vendors(
     @field:SerializedName("email_id")
     val emailId: String? = null,
 
-    @field:SerializedName("edit_info")
-    val editInfo: String? = null,
-
     @field:SerializedName("address")
     val address: String? = null,
 
@@ -21,9 +18,6 @@ data class Vendors(
 
     @field:SerializedName("gst")
     val gst: String? = null,
-
-    @field:SerializedName("entry_info")
-    val entryInfo: String? = null,
 
     @field:SerializedName("url")
     val url: String? = null,
