@@ -22,7 +22,7 @@
     </fragment>
 
     <fragment
-        android:id=" @+id/navigation_orders"
+        android:id="@+id/navigation_orders"
         android:name="com.tecqza.gdm.fastindia.ui.order.OrdersFragment"
         android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders" />

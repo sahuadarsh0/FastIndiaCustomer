@@ -8,7 +8,7 @@ import com.tecqza.gdm.fastindia.model.Product
 
 @Dao
 interface ProductsDao {
-    @Query("SELECT * FROM products")
+    @Query("SELECT * FROM Product")
    suspend fun getAll(): List<Product>
 
     @Insert

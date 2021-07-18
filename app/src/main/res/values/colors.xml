@@ -11,8 +11,10 @@
     <color name="black_grey">#7D7D7D</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FEBE14</color>
-    <color name="light_yellow">#FFF176</color>
+    <color name="lightYellow">#FFF176</color>
     <color name="red">#EF5350</color>
     <color name="green">#66BB6A</color>
-    <color name="input_gray">#CECECE</color>
+    <color name="inputGray">#CECECE</color>
+    <color name="darkGrey">#303030</color>
+    <color name="lightWhite">#D3D3D3</color>
 </resources>
