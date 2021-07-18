@@ -44,11 +44,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        binding.homeList.layoutManager = LinearLayoutManager(context)
+        binding.homeList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         binding.homeList.adapter = adapter
         adapter.listener = object : CategoryAdapter.ItemClickListener {
             override fun onItemClickListener(homeItem: HomeItem, imageView: ImageView) {
-
                 if (!homeItem.name.isNullOrBlank()) {
                     Toast.makeText(context, "clicked ${homeItem.name}", Toast.LENGTH_SHORT).show()
                 }
@@ -60,8 +59,6 @@ class DashboardFragment : Fragment() {
     private fun getData() {
         binding.progressBar.visibility = View.VISIBLE
         mainActivityViewModel.jsonHome.observe(viewLifecycleOwner, {
-
-
             if (it != null) {
                 it.let { home -> adapter.setList(home) }
                 adapter.notifyDataSetChanged()

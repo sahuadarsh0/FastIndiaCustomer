@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
         android:clipToPadding="false"
-        android:paddingHorizontal="10dp"
+        android:paddingHorizontal="40dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_home" />

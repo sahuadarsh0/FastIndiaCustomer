@@ -15,7 +15,7 @@ import com.tecqza.gdm.fastindia.model.HomeItem
 class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     private val categoryList = Home()
     lateinit var listener: CategoryAdapter.ItemClickListener
-    var rowIndex = -1
+    var rowIndex = 0
 
     fun setList(home: Home) {
         categoryList.clear()

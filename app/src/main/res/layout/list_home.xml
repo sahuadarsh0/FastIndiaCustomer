@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:id="@+id/row_home"
-    android:layout_height="50dp">
+    android:layout_height="60dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -12,8 +12,8 @@
         android:layout_margin="8dp"
         android:visibility="gone"
         android:id="@+id/card_name"
-        app:cardBackgroundColor="@color/darkGrey"
-        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/darkGrey2"
+        app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +24,10 @@
             android:id="@+id/name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="5dp"
-            android:textColor="@color/lightWhite"
-            android:textSize="20sp"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/yellow"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:text="@string/app_name" />
 
@@ -40,11 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="5dp"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="8dp"
         android:textColor="@color/lightWhite"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
