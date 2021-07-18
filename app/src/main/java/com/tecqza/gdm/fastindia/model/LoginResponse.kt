@@ -2,7 +2,7 @@ package com.tecqza.gdm.fastindia.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Response(
+data class LoginResponse(
     val data: Data? = null,
     val otp: Int? = null,
     val error: String? = null,

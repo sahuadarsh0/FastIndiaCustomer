@@ -5,6 +5,7 @@ import com.tecqza.gdm.fastindia.model.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -13,16 +14,16 @@ interface CustomerService {
 
     @FormUrlEncoded
     @POST("customer/login")
-    fun login(@Field("mobile") mobile: String?): Call<Response?>?
+    fun login(@Field("mobile") mobile: String?): Call<LoginResponse?>?
 
 
     @GET("vendor/vendorList")
-    suspend fun getVendorList(): retrofit2.Response<ArrayList<Vendors>?>?
+    suspend fun getVendorList(): Response<ArrayList<Vendor>?>?
 
     @GET("vendor/products/{vendorId}")
     suspend fun getProductList(
         @Path("vendorId") vendorId: String?
-    ): retrofit2.Response<ArrayList<Products>?>?
+    ): Response<ArrayList<Product>?>?
 
     @FormUrlEncoded
     @POST("customer/register")
@@ -33,7 +34,7 @@ interface CustomerService {
         @Field("address") address: String?,
         @Field("state_id") stateId: String?,
         @Field("city_id") cityId: String?
-    ): Call<Response>
+    ): Call<LoginResponse>
 
     @GET("customer/getCity")
     fun getCities(): Call<List<StatesCities>>

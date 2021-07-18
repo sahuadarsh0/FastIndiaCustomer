@@ -9,13 +9,13 @@ import com.bumptech.glide.Glide
 import com.tecqza.gdm.fastindia.R
 import com.tecqza.gdm.fastindia.data.remote.CustomerService.Companion.PRODUCT_URL
 import com.tecqza.gdm.fastindia.databinding.ListProductBinding
-import com.tecqza.gdm.fastindia.model.Products
+import com.tecqza.gdm.fastindia.model.Product
 
 
 class ProductAdapter : RecyclerView.Adapter<ProductsViewHolder>() {
-    private val productList = ArrayList<Products>()
+    private val productList = ArrayList<Product>()
 
-    fun setList(product: ArrayList<Products>) {
+    fun setList(product: ArrayList<Product>) {
         productList.clear()
         productList.addAll(product)
     }
@@ -43,7 +43,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductsViewHolder>() {
 
 class ProductsViewHolder(private val binding: ListProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(product: Products) {
+    fun bind(product: Product) {
         binding.productName.text = product.name
         binding.productDescription.text = product.description
         binding.mrp.text = "\u20A8 ${product.mrp}"

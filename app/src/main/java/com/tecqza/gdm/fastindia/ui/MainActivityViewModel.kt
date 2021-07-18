@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.tecqza.gdm.fastindia.data.local.database.CartDatabase
-import com.tecqza.gdm.fastindia.model.Products
+import com.tecqza.gdm.fastindia.model.Product
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,9 +19,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val productsDao = db.productsDao()
 
-    private val _productsLiveData = MutableLiveData<List<Products>>()
+    private val _productsLiveData = MutableLiveData<List<Product>>()
 
-    val productsLiveData: LiveData<List<Products>>
+    val productLiveData: LiveData<List<Product>>
         get() = _productsLiveData
 
     fun getProducts() {

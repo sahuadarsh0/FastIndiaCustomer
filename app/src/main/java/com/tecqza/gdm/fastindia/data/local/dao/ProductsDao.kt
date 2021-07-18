@@ -4,16 +4,16 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.tecqza.gdm.fastindia.model.Products
+import com.tecqza.gdm.fastindia.model.Product
 
 @Dao
 interface ProductsDao {
     @Query("SELECT * FROM products")
-   suspend fun getAll(): List<Products>
+   suspend fun getAll(): List<Product>
 
     @Insert
-    suspend fun insert(vararg products: Products)
+    suspend fun insert(vararg products: Product)
 
     @Delete
-    suspend fun delete(products: Products)
+    suspend fun delete(product: Product)
 }

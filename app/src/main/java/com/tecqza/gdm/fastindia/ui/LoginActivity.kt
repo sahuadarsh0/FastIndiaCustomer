@@ -8,9 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tecqza.gdm.fastindia.data.remote.CustomerService
 import com.tecqza.gdm.fastindia.databinding.ActivityLoginBinding
-import com.tecqza.gdm.fastindia.model.Response
+import com.tecqza.gdm.fastindia.model.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 import technited.minds.androidutils.ProcessDialog
 import technited.minds.androidutils.SharedPrefs
 
@@ -19,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var otp: String
-    private lateinit var responseData: Response
+    private lateinit var loginResponseData: LoginResponse
     private lateinit var userSharedPreferences: SharedPrefs
     private lateinit var processDialog: ProcessDialog
     private lateinit var transfer: String
@@ -59,14 +60,14 @@ class LoginActivity : AppCompatActivity() {
     private fun send(mobile: String) {
         processDialog.show()
         val apiInterface = CustomerService.create().login(mobile)
-        apiInterface?.enqueue(object : Callback<Response?> {
-            override fun onResponse(call: Call<Response?>, response: retrofit2.Response<Response?>) {
-                if (response.body()?.error.equals("0")) {
+        apiInterface?.enqueue(object : Callback<LoginResponse?> {
+            override fun onResponse(call: Call<LoginResponse?>, loginResponse: Response<LoginResponse?>) {
+                if (loginResponse.body()?.error.equals("0")) {
                     visibleSubmit()
-                    responseData = response.body()!!
-                    otp = response.body()?.otp.toString()
-                    transfer = responseData.message.toString()
-                    responseData.data?.apply {
+                    loginResponseData = loginResponse.body()!!
+                    otp = loginResponse.body()?.otp.toString()
+                    transfer = loginResponseData.message.toString()
+                    loginResponseData.data?.apply {
                         userSharedPreferences["name"] = name
                         userSharedPreferences["mobile"] = mobile
                         userSharedPreferences["emailId"] = emailId
@@ -79,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                 processDialog.dismiss()
             }
 
-            override fun onFailure(call: Call<Response?>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse?>, t: Throwable) {
                 Toast.makeText(applicationContext, "Invalid Mobile! OTP not sent", Toast.LENGTH_SHORT).show()
                 processDialog.dismiss()
             }

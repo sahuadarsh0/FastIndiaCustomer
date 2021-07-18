@@ -9,13 +9,13 @@ import com.bumptech.glide.Glide
 import com.tecqza.gdm.fastindia.R
 import com.tecqza.gdm.fastindia.data.remote.CustomerService.Companion.VENDOR_URL
 import com.tecqza.gdm.fastindia.databinding.ListVendorBinding
-import com.tecqza.gdm.fastindia.model.Vendors
+import com.tecqza.gdm.fastindia.model.Vendor
 
 class VendorAdapter : RecyclerView.Adapter<VendorAdapter.MyViewHolder>() {
-    private val vendorList = ArrayList<Vendors>()
+    private val vendorList = ArrayList<Vendor>()
     lateinit var listener: ItemClickListener
 
-    fun setList(vendor: ArrayList<Vendors>) {
+    fun setList(vendor: ArrayList<Vendor>) {
         vendorList.clear()
         vendorList.addAll(vendor)
     }
@@ -41,7 +41,7 @@ class VendorAdapter : RecyclerView.Adapter<VendorAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(private val binding: ListVendorBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(vendor: Vendors) {
+        fun bind(vendor: Vendor) {
 //        binding.name.text = vendor.name
 //        binding.address.text = vendor.address
             val imgUrl = VENDOR_URL + vendor.logo
@@ -58,6 +58,6 @@ class VendorAdapter : RecyclerView.Adapter<VendorAdapter.MyViewHolder>() {
     }
 
     interface ItemClickListener {
-        fun onItemClickListener(vendor: Vendors, imageView: ImageView)
+        fun onItemClickListener(vendor: Vendor, imageView: ImageView)
     }
 }

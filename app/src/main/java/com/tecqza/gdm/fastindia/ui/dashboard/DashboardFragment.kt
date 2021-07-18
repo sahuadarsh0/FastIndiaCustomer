@@ -13,7 +13,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tecqza.gdm.fastindia.databinding.FragmentDashboardBinding
-import com.tecqza.gdm.fastindia.model.Vendors
+import com.tecqza.gdm.fastindia.model.Vendor
 import com.tecqza.gdm.fastindia.ui.WebPage
 import com.tecqza.gdm.fastindia.ui.adapters.VendorAdapter
 
@@ -46,7 +46,7 @@ class DashboardFragment : Fragment() {
         binding.vendorList.layoutManager = LinearLayoutManager(context)
         binding.vendorList.adapter = adapter
         adapter.listener = object : VendorAdapter.ItemClickListener {
-            override fun onItemClickListener(vendor: Vendors, imageView: ImageView) {
+            override fun onItemClickListener(vendor: Vendor, imageView: ImageView) {
 
                 if (vendor.url.isNullOrBlank()) {
                     val extras = FragmentNavigatorExtras(

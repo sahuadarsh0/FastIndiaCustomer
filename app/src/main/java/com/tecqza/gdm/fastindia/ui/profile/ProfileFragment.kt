@@ -93,13 +93,13 @@ class ProfileFragment : Fragment() {
             stateId,
             cityId
         )
-        registerCustomer.enqueue(object : Callback<com.tecqza.gdm.fastindia.model.Response> {
+        registerCustomer.enqueue(object : Callback<com.tecqza.gdm.fastindia.model.LoginResponse> {
             override fun onResponse(
-                call: Call<com.tecqza.gdm.fastindia.model.Response>,
-                response: Response<com.tecqza.gdm.fastindia.model.Response>
+                call: Call<com.tecqza.gdm.fastindia.model.LoginResponse>,
+                loginResponse: Response<com.tecqza.gdm.fastindia.model.LoginResponse>
             ) {
 
-                if (response.isSuccessful && response.body()?.error.equals("0")) {
+                if (loginResponse.isSuccessful && loginResponse.body()?.error.equals("0")) {
                     Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
                     binding.apply {
                         userSharedPreferences["name"] = name.text.toString()
@@ -115,7 +115,7 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), "Error not Updated", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onFailure(call: Call<com.tecqza.gdm.fastindia.model.Response>, t: Throwable) {
+            override fun onFailure(call: Call<com.tecqza.gdm.fastindia.model.LoginResponse>, t: Throwable) {
 
             }
         })
