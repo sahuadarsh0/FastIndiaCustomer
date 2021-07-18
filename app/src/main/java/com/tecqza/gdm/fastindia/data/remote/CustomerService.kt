@@ -46,6 +46,10 @@ interface CustomerService {
     fun checkUpdate(): Call<CheckUpdate>
 
 
+    @GET("vendor/catList")
+    suspend fun home(): Response<Home>
+
+
     companion object {
 
         var BASE_URL = "http://fastindia.app/api/"

@@ -8,18 +8,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tecqza.gdm.fastindia.databinding.FragmentDashboardBinding
 import com.tecqza.gdm.fastindia.model.Vendor
+import com.tecqza.gdm.fastindia.ui.MainActivityViewModel
 import com.tecqza.gdm.fastindia.ui.WebPage
 import com.tecqza.gdm.fastindia.ui.adapters.VendorAdapter
 
 class DashboardFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private lateinit var mainActivityViewModel: MainActivityViewModel
     private var _binding: FragmentDashboardBinding? = null
 
     private val binding get() = _binding!!
@@ -30,7 +34,7 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -64,7 +68,7 @@ class DashboardFragment : Fragment() {
                 else startWeb(vendor.url)
             }
         }
-        getData()
+//        getData()
     }
 
     private fun getData() {
