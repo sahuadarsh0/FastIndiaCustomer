@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.tecqza.gdm.fastindia.data.remote.CustomerService
 import com.tecqza.gdm.fastindia.model.Home
+import com.tecqza.gdm.fastindia.model.HomeItem
 
 class MainActivityViewModel() : ViewModel() {
 //    (application: Application) : AndroidViewModel(application) {
@@ -37,6 +38,12 @@ class MainActivityViewModel() : ViewModel() {
 
     fun setHomeVariable(home: Home?) {
         this.jsonHome.value = home
+    }
 
+    var jsonHomeItem: MutableLiveData<HomeItem?> =
+        MutableLiveData<HomeItem?>()
+
+    fun setHomeItemVariable(home: HomeItem?) {
+        this.jsonHomeItem.value = home
     }
 }

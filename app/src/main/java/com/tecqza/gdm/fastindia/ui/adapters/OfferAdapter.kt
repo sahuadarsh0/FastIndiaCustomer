@@ -50,7 +50,6 @@ class OfferAdapter : RecyclerView.Adapter<OfferAdapter.OfferViewHolder>() {
         fun bind(slider: Slider) {
 
             binding.apply {
-//        binding.address.text = vendor.address
                 val imgUrl = SLIDER_URL + slider.image
                 Glide.with(offerImage.context)
                     .load(imgUrl)
@@ -60,7 +59,7 @@ class OfferAdapter : RecyclerView.Adapter<OfferAdapter.OfferViewHolder>() {
 //            binding.orderNow.setOnClickListener {
 //                listener.onItemClickListener(vendor, binding.vendorImage)
 //            }
-//                rowHomeHolder = rowHome
+                rowHomeHolder = rowSlider
 
             }
 

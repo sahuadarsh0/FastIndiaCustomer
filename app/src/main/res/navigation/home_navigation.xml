@@ -10,8 +10,5 @@
         android:name="com.tecqza.gdm.fastindia.ui.home.HomeDetailFragment"
         android:label="fragment_home_details"
         tools:layout="@layout/fragment_home_details" >
-        <argument
-            android:name="homeItem"
-            app:argType="com.tecqza.gdm.fastindia.model.HomeItem" />
     </fragment>
 </navigation>

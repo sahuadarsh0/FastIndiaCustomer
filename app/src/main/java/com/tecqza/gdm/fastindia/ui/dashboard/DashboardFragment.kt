@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -37,20 +36,18 @@ class DashboardFragment : Fragment() {
     ): View {
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-//        navController = findNavController(R.id.fragment_container)
-        initRecyclerView()
 //        binding.banner.setOnClickListener {
 //            startWeb("https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en_IN&gl=US")
 //        }
 
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val nestedNavHostFragment = childFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = nestedNavHostFragment.navController
+        initRecyclerView()
     }
 
     private fun initRecyclerView() {
@@ -60,12 +57,11 @@ class DashboardFragment : Fragment() {
             override fun onItemClickListener(homeItem: HomeItem) {
 
                 Toast.makeText(context, "${homeItem.name}", Toast.LENGTH_SHORT).show()
-                val bundle = bundleOf("homeItem" to "homeItem")
-                navController.setGraph(R.navigation.home_navigation, bundle)
-//                 val directions = DashboardFragmentDirections.xml(bundle)
-//                navController.navigate(directions)
-
-                navController.navigate(R.id.homeDetailFragment,bundle)
+//                val bundle = bundleOf("homeItem" to homeItem.slider)
+                mainActivityViewModel.setHomeItemVariable(homeItem)
+//                bundle.putParcelableArrayList("arraylist", homeItem.slider);
+                navController.setGraph(R.navigation.home_navigation)
+                navController.navigate(R.id.homeDetailFragment)
             }
         }
         getData()
