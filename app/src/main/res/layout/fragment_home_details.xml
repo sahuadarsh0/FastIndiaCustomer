@@ -21,6 +21,20 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_offer" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vendor_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/offer_list"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_vendor" />
+
 
     <ProgressBar
         android:id="@+id/progress_bar"

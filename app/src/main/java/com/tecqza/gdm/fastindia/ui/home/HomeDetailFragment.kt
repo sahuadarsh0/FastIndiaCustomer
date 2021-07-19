@@ -5,22 +5,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tecqza.gdm.fastindia.databinding.FragmentHomeDetailsBinding
 import com.tecqza.gdm.fastindia.model.Slider
+import com.tecqza.gdm.fastindia.model.Vendor
 import com.tecqza.gdm.fastindia.ui.MainActivityViewModel
 import com.tecqza.gdm.fastindia.ui.WebPage
 import com.tecqza.gdm.fastindia.ui.adapters.OfferAdapter
+import com.tecqza.gdm.fastindia.ui.adapters.VendorAdapter
+import com.tecqza.gdm.fastindia.ui.dashboard.DashboardFragmentDirections
 
 class HomeDetailFragment : Fragment() {
 
     private lateinit var ordersViewModel: HomeDetailViewModel
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var _binding: FragmentHomeDetailsBinding? = null
-    private val adapter = OfferAdapter()
+    private val offerAdapter = OfferAdapter()
+    private val vendorAdapter = VendorAdapter()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -48,8 +55,8 @@ class HomeDetailFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.offerList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.offerList.adapter = adapter
-        adapter.listener = object :
+        binding.offerList.adapter = offerAdapter
+        offerAdapter.listener = object :
             OfferAdapter.ItemClickListener {
             override fun onItemClickListener(slider: Slider) {
 
@@ -58,26 +65,44 @@ class HomeDetailFragment : Fragment() {
 //                findNavController().navigate(R.id.homeDetailFragment, bundle)
             }
         }
+
+
+
+        binding.vendorList.layoutManager = LinearLayoutManager(context)
+        binding.vendorList.adapter = vendorAdapter
+        vendorAdapter.listener = object : VendorAdapter.ItemClickListener {
+            override fun onItemClickListener(vendor: Vendor, imageView: ImageView) {
+
+                if (vendor.url.isNullOrBlank()) {
+                    val extras = FragmentNavigatorExtras(
+                        imageView to "vendor"
+                    )
+                    val action = DashboardFragmentDirections
+                        .actionNavigationDashboardToProductsFragment(
+                            vendor.vendorId!!,
+                            vendor.logo!!,
+                            vendor.mobile!!,
+                            vendor.name!!
+                        )
+                    findNavController().navigate(action, extras)
+                }
+                else startWeb(vendor.url)
+            }
+        }
         getData()
     }
 
     private fun getData() {
-//        binding.progressBar.visibility = View.VISIBLE
-
-//     val homeItem = getBundle().getParcelableArrayList<Slider>("arraylist")
-
-//        HomeDetailFragment().arguments
-//        Log.d("asa", "getData: ${homeItem}")
-//        if (homeItem != null) {
-//            homeItem.getParcelableArrayList<Slider>()?.let { adapter.setList(it) }
-//        }
-//                adapter.notifyDataSetChanged()
-//                binding.progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
 
         mainActivityViewModel.jsonHomeItem.observe(viewLifecycleOwner, {
             if (it != null) {
-                it.let { homeItem -> adapter.setList(homeItem.slider!!) }
-                adapter.notifyDataSetChanged()
+                it.let { homeItem ->
+                    offerAdapter.setList(homeItem.slider!!)
+                    vendorAdapter.setList(homeItem.vendor!!)
+                }
+                offerAdapter.notifyDataSetChanged()
+                vendorAdapter.notifyDataSetChanged()
                 binding.progressBar.visibility = View.GONE
             } else {
                 binding.progressBar.visibility = View.GONE
