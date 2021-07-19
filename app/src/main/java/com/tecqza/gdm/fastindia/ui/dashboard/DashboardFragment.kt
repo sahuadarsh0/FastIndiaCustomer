@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tecqza.gdm.fastindia.R
 import com.tecqza.gdm.fastindia.databinding.FragmentDashboardBinding
 import com.tecqza.gdm.fastindia.model.HomeItem
 import com.tecqza.gdm.fastindia.ui.MainActivityViewModel
@@ -22,6 +25,7 @@ class DashboardFragment : Fragment() {
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var _binding: FragmentDashboardBinding? = null
+    private lateinit var navController: NavController
 
     private val binding get() = _binding!!
     private val adapter = CategoryAdapter()
@@ -35,6 +39,7 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+//        navController = findNavController(R.id.fragment_container)
         initRecyclerView()
 //        binding.banner.setOnClickListener {
 //            startWeb("https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en_IN&gl=US")
@@ -43,14 +48,24 @@ class DashboardFragment : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val nestedNavHostFragment = childFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navController = nestedNavHostFragment.navController
+    }
+
     private fun initRecyclerView() {
-        binding.homeList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        binding.homeList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.homeList.adapter = adapter
         adapter.listener = object : CategoryAdapter.ItemClickListener {
-            override fun onItemClickListener(homeItem: HomeItem, imageView: ImageView) {
-                if (!homeItem.name.isNullOrBlank()) {
-                    Toast.makeText(context, "clicked ${homeItem.name}", Toast.LENGTH_SHORT).show()
-                }
+            override fun onItemClickListener(homeItem: HomeItem) {
+
+                Toast.makeText(context, "${homeItem.name}", Toast.LENGTH_SHORT).show()
+                val bundle = bundleOf("homeItem" to "homeItem")
+                navController.setGraph(R.navigation.home_navigation, bundle)
+//                 val directions = DashboardFragmentDirections.xml(bundle)
+//                navController.navigate(directions)
+
+                navController.navigate(R.id.homeDetailFragment,bundle)
             }
         }
         getData()

@@ -14,7 +14,7 @@ import com.tecqza.gdm.fastindia.model.HomeItem
 
 class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     private val categoryList = Home()
-    lateinit var listener: CategoryAdapter.ItemClickListener
+    lateinit var listener: ItemClickListener
     var rowIndex = 0
 
     fun setList(home: Home) {
@@ -42,6 +42,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
             rowHomeHolder.setOnClickListener {
                 rowIndex = position
                 notifyDataSetChanged()
+                listener.onItemClickListener(categoryList[position] )
             }
             if (rowIndex == position) {
                 cardNameHolder.visibility = View.VISIBLE
@@ -86,6 +87,6 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
     }
 
     interface ItemClickListener {
-        fun onItemClickListener(homeItem: HomeItem, imageView: ImageView)
+        fun onItemClickListener(homeItem: HomeItem)
     }
 }

@@ -3,7 +3,10 @@ package com.tecqza.gdm.fastindia.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class Product(
 
@@ -34,4 +37,4 @@ data class Product(
     @field:SerializedName("selling")
     val selling: String? = null
 
-)
+) : Parcelable

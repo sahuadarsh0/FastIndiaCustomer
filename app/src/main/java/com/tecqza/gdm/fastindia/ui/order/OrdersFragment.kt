@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.tecqza.gdm.fastindia.databinding.FragmentOrdersBinding
+import com.tecqza.gdm.fastindia.ui.order.OrdersViewModel
 
 class OrdersFragment : Fragment() {
 

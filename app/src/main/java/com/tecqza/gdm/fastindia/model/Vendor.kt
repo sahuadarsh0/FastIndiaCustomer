@@ -1,7 +1,10 @@
 package com.tecqza.gdm.fastindia.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Vendor(
     @field:SerializedName("email_id")
     val emailId: String? = null,
@@ -32,5 +35,6 @@ data class Vendor(
     @field:SerializedName("status")
     val status: String? = null,
     @SerializedName("product")
-    val product: List<Product>?=null
-)
+    val product:List<Product>?=null
+
+) : Parcelable

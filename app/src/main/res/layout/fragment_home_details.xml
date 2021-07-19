@@ -5,31 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkGrey"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".ui.home.HomeDetailFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_list"
+        android:id="@+id/offer_list"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
         android:clipToPadding="false"
-        android:paddingHorizontal="40dp"
+        android:paddingHorizontal="20dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_home" />
+        tools:listitem="@layout/list_offer" />
 
-    <fragment
-        android:id="@+id/fragment_container"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_list"
-        app:navGraph="@navigation/home_navigation" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
