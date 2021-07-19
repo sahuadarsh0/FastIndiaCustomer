@@ -6,7 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tecqza.gdm.fastindia.R
-import com.tecqza.gdm.fastindia.data.remote.CustomerService.Companion.SLIDER_URL
+import com.tecqza.gdm.fastindia.data.remote.CustomerService.Companion.OFFER_URL
 import com.tecqza.gdm.fastindia.databinding.ListOfferBinding
 import com.tecqza.gdm.fastindia.model.Slider
 
@@ -50,7 +50,7 @@ class OfferAdapter : RecyclerView.Adapter<OfferAdapter.OfferViewHolder>() {
         fun bind(slider: Slider) {
 
             binding.apply {
-                val imgUrl = SLIDER_URL + slider.image
+                val imgUrl = OFFER_URL + slider.image
                 Glide.with(offerImage.context)
                     .load(imgUrl)
                     .placeholder(R.drawable.f_icon)

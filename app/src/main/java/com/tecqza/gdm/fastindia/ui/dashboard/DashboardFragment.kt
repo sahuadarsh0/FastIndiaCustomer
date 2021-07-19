@@ -18,6 +18,7 @@ import com.tecqza.gdm.fastindia.model.HomeItem
 import com.tecqza.gdm.fastindia.ui.MainActivityViewModel
 import com.tecqza.gdm.fastindia.ui.WebPage
 import com.tecqza.gdm.fastindia.ui.adapters.CategoryAdapter
+import technited.minds.androidutils.SharedPrefs
 
 class DashboardFragment : Fragment() {
 
@@ -25,6 +26,7 @@ class DashboardFragment : Fragment() {
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var _binding: FragmentDashboardBinding? = null
     private lateinit var navController: NavController
+    private lateinit var userSharedPreferences: SharedPrefs
 
     private val binding get() = _binding!!
     private val adapter = CategoryAdapter()
@@ -36,7 +38,11 @@ class DashboardFragment : Fragment() {
     ): View {
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        userSharedPreferences = SharedPrefs(requireContext(), "USER")
 
+        with(userSharedPreferences) {
+            binding.name.setText(get("name"))
+        }
 //        binding.banner.setOnClickListener {
 //            startWeb("https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en_IN&gl=US")
 //        }
