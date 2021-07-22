@@ -41,7 +41,7 @@ class DashboardFragment : Fragment() {
         userSharedPreferences = SharedPrefs(requireContext(), "USER")
 
         with(userSharedPreferences) {
-            binding.name.setText(get("name"))
+            binding.name.text = get("name")
         }
 //        binding.banner.setOnClickListener {
 //            startWeb("https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en_IN&gl=US")
