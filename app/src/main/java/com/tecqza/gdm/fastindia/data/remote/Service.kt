@@ -25,7 +25,9 @@ interface Service {
 
         fun create(): Service {
             val builder = OkHttpClient.Builder()
-            val httpLoggingInterceptor = HttpLoggingInterceptor { s: String? -> Log.d("ASA", s!!) }
+            val httpLoggingInterceptor = HttpLoggingInterceptor {
+//                    s: String? -> Log.d("ASA", s!!)
+            }
 
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             builder.addInterceptor(httpLoggingInterceptor)
