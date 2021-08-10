@@ -64,45 +64,11 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        mainActivityViewModel.getHome().observe(this,{
-            if (it.body()!= null){
+        mainActivityViewModel.getHome().observe(this) {
+            if (it.body() != null) {
                 val home = it.body()
                 mainActivityViewModel.setHomeVariable(home)
             }
-        })
-//        navView.setOnNavigationItemSelectedListener(this)
+        }
     }
-
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.logout -> {
-//                MaterialDialog(this).show {
-//                    title(text = "Logout?")
-//                    message(text = "Are you sure want to logout ?")
-//                    cornerRadius(16f)
-//                    positiveButton(text = "Yes") { dialog ->
-//                        userSharedPreferences = SharedPrefs(this@MainActivity, "USER")
-//                        userSharedPreferences.clearAll()
-//                        dialog.dismiss()
-//                        finish()
-//                    }
-//                    negativeButton(text = "Cancel") { dialog ->
-//                        dialog.dismiss()
-//                    }
-//                }
-//            }
-//            R.id.navigation_dashboard -> {
-//                navController.navigate(R.id.navigation_dashboard)
-//            }
-//            R.id.navigation_profile -> {
-//                navController.navigate(R.id.navigation_profile)
-//            }
-//            R.id.navigation_orders -> {
-//                navController.navigate(R.id.navigation_orders)
-//            }
-//        }
-//        return true
-//
-//    }
-
 }
