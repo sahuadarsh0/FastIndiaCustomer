@@ -10,11 +10,6 @@
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_home"
         android:title="@string/title_dashboard" />
-
-    <item
-        android:id="@+id/navigation_orders"
-        android:icon="@drawable/ic_order"
-        android:title="@string/title_orders" />
     <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"

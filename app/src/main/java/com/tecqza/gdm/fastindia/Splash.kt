@@ -72,7 +72,7 @@ class Splash : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     val check = response.body()
-                    if (check?.jsonContinue.equals("true")) {
+                    if (check?.browser.equals("true")) {
                         checkUpdate()
                     } else
                         1 / 0

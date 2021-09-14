@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var userSharedPreferences: SharedPrefs
     private lateinit var navController: NavController
-    private val mainActivityViewModel : MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,21 +53,10 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.navigation_profile)
                     return@setOnItemSelectedListener true
                 }
-                R.id.navigation_orders -> {
-                    navController.navigate(R.id.navigation_orders)
-                    return@setOnItemSelectedListener true
-                }
                 else -> Toast.makeText(this, "Select an item", Toast.LENGTH_SHORT).show()
             }
-
             false
         }
 
-        mainActivityViewModel.getHome().observe(this) {
-            if (it.body() != null) {
-                val home = it.body()
-                mainActivityViewModel.setHomeVariable(home)
-            }
-        }
     }
 }
